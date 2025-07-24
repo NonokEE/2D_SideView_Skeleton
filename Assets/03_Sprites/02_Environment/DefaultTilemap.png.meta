@@ -1,0 +1,1808 @@
+fileFormatVersion: 2
+guid: da235f7cd0d74854fb1e5cf9e788750f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5118385096085657335
+    second: DefaultTilemap_0
+  - first:
+      213: -6824933002013929339
+    second: DefaultTilemap_1
+  - first:
+      213: 7702240187637559653
+    second: DefaultTilemap_2
+  - first:
+      213: -1633077493014826168
+    second: DefaultTilemap_3
+  - first:
+      213: 1010392271976272777
+    second: DefaultTilemap_4
+  - first:
+      213: -8006256536645928639
+    second: DefaultTilemap_5
+  - first:
+      213: 6205901265903202904
+    second: DefaultTilemap_6
+  - first:
+      213: 1481332265996734877
+    second: DefaultTilemap_7
+  - first:
+      213: 396219976097152974
+    second: DefaultTilemap_8
+  - first:
+      213: -2811900365109562306
+    second: DefaultTilemap_9
+  - first:
+      213: -2706254201280844472
+    second: DefaultTilemap_10
+  - first:
+      213: -840074432414761121
+    second: DefaultTilemap_11
+  - first:
+      213: -5922429984836151208
+    second: DefaultTilemap_12
+  - first:
+      213: 1176297375962356453
+    second: DefaultTilemap_13
+  - first:
+      213: 5863671363394055511
+    second: DefaultTilemap_14
+  - first:
+      213: -7840569951465399313
+    second: DefaultTilemap_15
+  - first:
+      213: 7281158766936281444
+    second: DefaultTilemap_16
+  - first:
+      213: 2207384595273282075
+    second: DefaultTilemap_17
+  - first:
+      213: -8781201728009054393
+    second: DefaultTilemap_18
+  - first:
+      213: 2899394754149937097
+    second: DefaultTilemap_19
+  - first:
+      213: -6284919583754429949
+    second: DefaultTilemap_20
+  - first:
+      213: 5409899774835267851
+    second: DefaultTilemap_21
+  - first:
+      213: -916549513185477418
+    second: DefaultTilemap_22
+  - first:
+      213: -4421013148490465581
+    second: DefaultTilemap_23
+  - first:
+      213: -4274458684359719477
+    second: DefaultTilemap_24
+  - first:
+      213: 6126615190416235160
+    second: DefaultTilemap_25
+  - first:
+      213: 5132163408408444457
+    second: DefaultTilemap_26
+  - first:
+      213: -7074339150725186685
+    second: DefaultTilemap_27
+  - first:
+      213: -8382413405020147903
+    second: DefaultTilemap_28
+  - first:
+      213: -3950402042077408530
+    second: DefaultTilemap_29
+  - first:
+      213: 4421749698142232391
+    second: DefaultTilemap_30
+  - first:
+      213: -8339956929029722528
+    second: DefaultTilemap_31
+  - first:
+      213: 3674812555211487652
+    second: DefaultTilemap_32
+  - first:
+      213: 1762420640624638222
+    second: DefaultTilemap_33
+  - first:
+      213: -6442851803588094140
+    second: DefaultTilemap_34
+  - first:
+      213: 4342648562550704530
+    second: DefaultTilemap_35
+  - first:
+      213: -6598416939299125528
+    second: DefaultTilemap_36
+  - first:
+      213: -1021904258569322567
+    second: DefaultTilemap_37
+  - first:
+      213: 956992341110785058
+    second: DefaultTilemap_38
+  - first:
+      213: 744325523259900593
+    second: DefaultTilemap_39
+  - first:
+      213: 7396272632711778788
+    second: DefaultTilemap_40
+  - first:
+      213: 7704131223691484856
+    second: DefaultTilemap_41
+  - first:
+      213: 877343400732132758
+    second: DefaultTilemap_42
+  - first:
+      213: 3863270009337365644
+    second: DefaultTilemap_43
+  - first:
+      213: -3756352039790892867
+    second: DefaultTilemap_44
+  - first:
+      213: -4490718495843821702
+    second: DefaultTilemap_45
+  - first:
+      213: -7205116720613823596
+    second: DefaultTilemap_46
+  - first:
+      213: -6893070220973694299
+    second: DefaultTilemap_47
+  - first:
+      213: -9155932260949124924
+    second: DefaultTilemap_48
+  - first:
+      213: 6719896732982710538
+    second: DefaultTilemap_49
+  - first:
+      213: -1645455518267527270
+    second: DefaultTilemap_50
+  - first:
+      213: -8676742130458534008
+    second: DefaultTilemap_51
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 128
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DefaultTilemap_0
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 1786
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 2, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -64}
+        - {x: 2, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 909292c9fd7d7f8b0800000000000000
+      internalID: -5118385096085657335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_1
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 1786
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -2, y: 64}
+        - {x: -2, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5809e1f3897f841a0800000000000000
+      internalID: -6824933002013929339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_2
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 1786
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -2}
+        - {x: 64, y: -2}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 561ffd674aad3ea60800000000000000
+      internalID: 7702240187637559653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_3
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 1786
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 2}
+        - {x: -64, y: 2}
+        - {x: -64, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8437a2a2ca42659e0800000000000000
+      internalID: -1633077493014826168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_4
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 1638
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: 61}
+        - {x: 61, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98312f60b62a50e00800000000000000
+      internalID: 1010392271976272777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_5
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 1638
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 61}
+        - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -64}
+        - {x: -61, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 149f190591014e090800000000000000
+      internalID: -8006256536645928639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_6
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 1638
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: -61}
+        - {x: -61, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 852be41325acf1650800000000000000
+      internalID: 6205901265903202904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_7
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 1638
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: 61, y: 64}
+        - {x: -64, y: -61}
+        - {x: -64, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d915f05f8dfbe8410800000000000000
+      internalID: 1481332265996734877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_8
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 1490
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: 61, y: 64}
+        - {x: -2, y: -62}
+        - {x: -2, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecf3f2018f7af7500800000000000000
+      internalID: 396219976097152974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_9
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 1490
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -3, y: 64}
+        - {x: -64, y: -58}
+        - {x: -64, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e347ad9148f1af8d0800000000000000
+      internalID: -2811900365109562306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_10
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 1490
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: 58}
+        - {x: -3, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84d2fbc6424717ad0800000000000000
+      internalID: -2706254201280844472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_11
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 1490
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -2, y: 64}
+        - {x: -2, y: 62}
+        - {x: 61, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5fb70f21c47754f0800000000000000
+      internalID: -840074432414761121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_12
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 1342
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 2, y: -62}
+        - {x: -61, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -64}
+        - {x: 2, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85818b2ae4d4fcda0800000000000000
+      internalID: -5922429984836151208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_13
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 1342
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: -58}
+        - {x: 3, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ead57c2b3c035010800000000000000
+      internalID: 1176297375962356453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_14
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 1342
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 58}
+        - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -64}
+        - {x: 3, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75dabb6b902ff5150800000000000000
+      internalID: 5863671363394055511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_15
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 1342
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 2, y: 62}
+        - {x: 2, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -64}
+        - {x: -61, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: feb9d469b23b03390800000000000000
+      internalID: -7840569951465399313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_16
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 1194
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 61}
+        - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -2}
+        - {x: -62, y: -2}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4615570425fdb0560800000000000000
+      internalID: 7281158766936281444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_17
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 1194
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: -3}
+        - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -64}
+        - {x: -58, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b12feeb189432ae10800000000000000
+      internalID: 2207384595273282075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_18
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 1194
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 2}
+        - {x: 62, y: 2}
+        - {x: -64, y: -61}
+        - {x: -64, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74759fc9d87e22680800000000000000
+      internalID: -8781201728009054393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_19
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 1194
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: 58, y: 64}
+        - {x: -64, y: 3}
+        - {x: -64, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cfecb0da28bc3820800000000000000
+      internalID: 2899394754149937097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_20
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 1046
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: -61}
+        - {x: -62, y: 2}
+        - {x: -64, y: 2}
+        - {x: -64, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30adb6000fa77c8a0800000000000000
+      internalID: -6284919583754429949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_21
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 1046
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 3}
+        - {x: -58, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b09958dae23d31b40800000000000000
+      internalID: 5409899774835267851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_22
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 1046
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: 61}
+        - {x: 62, y: -2}
+        - {x: 64, y: -2}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dcb587e213c743f0800000000000000
+      internalID: -916549513185477418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_23
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 1046
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -3}
+        - {x: 58, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3def4e807f765a2c0800000000000000
+      internalID: -4421013148490465581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_24
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 898
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 2, y: 0}
+        - {x: 2, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -2}
+        - {x: 0, y: -2}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc5c7af39721ea4c0800000000000000
+      internalID: -4274458684359719477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_25
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 898
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -2, y: 64}
+        - {x: -2, y: 0}
+        - {x: 0, y: -2}
+        - {x: 64, y: -2}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89a95443e0c160550800000000000000
+      internalID: 6126615190416235160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_26
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 898
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 2, y: 0}
+        - {x: 0, y: 2}
+        - {x: -64, y: 2}
+        - {x: -64, y: -64}
+        - {x: 2, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92e7177bd6b193740800000000000000
+      internalID: 5132163408408444457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_27
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 898
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 2}
+        - {x: 0, y: 2}
+        - {x: -2, y: 0}
+        - {x: -2, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38bf26c1606e2dd90800000000000000
+      internalID: -7074339150725186685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_28
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 750
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 2, y: -63}
+        - {x: -63, y: 2}
+        - {x: -64, y: 2}
+        - {x: -64, y: -64}
+        - {x: 2, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14f2d498b6fabab80800000000000000
+      internalID: -8382413405020147903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_29
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 750
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 2, y: 63}
+        - {x: 2, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -2}
+        - {x: -63, y: -2}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee29ff9d54a5d29c0800000000000000
+      internalID: -3950402042077408530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_30
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 750
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 2}
+        - {x: 63, y: 2}
+        - {x: -2, y: -63}
+        - {x: -2, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74f557b4ce53d5d30800000000000000
+      internalID: 4421749698142232391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_31
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 750
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -2, y: 64}
+        - {x: -2, y: 63}
+        - {x: 63, y: -2}
+        - {x: 64, y: -2}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06e202b2c55824c80800000000000000
+      internalID: -8339956929029722528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_32
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 602
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -3, y: 64}
+        - {x: -64, y: 3}
+        - {x: -64, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a9b6898c8e8ff230800000000000000
+      internalID: 3674812555211487652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_33
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 602
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -3}
+        - {x: -3, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e097f352c30657810800000000000000
+      internalID: 1762420640624638222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_34
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 602
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 3}
+        - {x: 3, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44795aa9b646696a0800000000000000
+      internalID: -6442851803588094140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_35
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 602
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: -3}
+        - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -64}
+        - {x: 3, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 299023bfbdf244c30800000000000000
+      internalID: 4342648562550704530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_36
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 454
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -2}
+        - {x: 64, y: -2}
+      physicsShape:
+      - - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: 48}
+        - {x: 64, y: 48}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e6c72de0c6bd64a0800000000000000
+      internalID: -6598416939299125528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_37
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 454
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 46}
+        - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: 46}
+        - {x: -16, y: -2}
+        - {x: 16, y: -2}
+      physicsShape:
+      - - {x: -64, y: 48}
+        - {x: 64, y: 48}
+        - {x: 64, y: 64}
+        - {x: -64, y: 64}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bf3489bd7771d1f0800000000000000
+      internalID: -1021904258569322567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_38
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 454
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: 46}
+        - {x: -16, y: -2}
+        - {x: 64, y: -2}
+      physicsShape:
+      - - {x: -64, y: 48}
+        - {x: 64, y: 48}
+        - {x: 64, y: 64}
+        - {x: -64, y: 64}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2248da0c67be74d00800000000000000
+      internalID: 956992341110785058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_39
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 454
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -2, y: 64}
+        - {x: -2, y: 48}
+        - {x: 48, y: -2}
+        - {x: 64, y: -2}
+      physicsShape:
+      - - {x: 0, y: 48}
+        - {x: 64, y: 48}
+        - {x: 64, y: 64}
+        - {x: 0, y: 64}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b2c92bae10645a00800000000000000
+      internalID: 744325523259900593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_40
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 306
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 46}
+        - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -2}
+        - {x: 16, y: -2}
+      physicsShape:
+      - - {x: -64, y: 48}
+        - {x: 64, y: 48}
+        - {x: 64, y: 64}
+        - {x: -64, y: 64}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e19ab6b5c6d4a660800000000000000
+      internalID: 7396272632711778788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_41
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 306
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 2, y: 48}
+        - {x: 2, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -2}
+        - {x: -48, y: -2}
+      physicsShape:
+      - - {x: -64, y: 48}
+        - {x: 0, y: 48}
+        - {x: 0, y: 64}
+        - {x: -64, y: 64}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8be502b97829aea60800000000000000
+      internalID: 7704131223691484856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_42
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 306
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 2}
+        - {x: -64, y: 2}
+        - {x: -64, y: -64}
+        - {x: 64, y: -64}
+      physicsShape:
+      - - {x: -64, y: -16}
+        - {x: 64, y: -16}
+        - {x: 64, y: 0}
+        - {x: -64, y: 0}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6950ca2bc23fc2c00800000000000000
+      internalID: 877343400732132758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_43
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 306
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: -18}
+        - {x: 64, y: 2}
+        - {x: -64, y: 2}
+        - {x: -64, y: -18}
+        - {x: -18, y: -64}
+        - {x: 18, y: -64}
+      physicsShape:
+      - - {x: -64, y: -16}
+        - {x: 64, y: -16}
+        - {x: 64, y: 0}
+        - {x: -64, y: 0}
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8449f1ea971d9530800000000000000
+      internalID: 3863270009337365644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_44
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 158
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 2}
+        - {x: -64, y: 2}
+        - {x: -64, y: -18}
+        - {x: -18, y: -64}
+        - {x: 64, y: -64}
+      physicsShape:
+      - - {x: -64, y: -16}
+        - {x: 64, y: -16}
+        - {x: 64, y: 0}
+        - {x: -64, y: 0}
+      tessellationDetail: 0
+      bones: []
+      spriteID: db823f8c8b1cedbc0800000000000000
+      internalID: -3756352039790892867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_45
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 158
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 2}
+        - {x: 0, y: 2}
+        - {x: -2, y: 0}
+        - {x: -2, y: -16}
+        - {x: 46, y: -64}
+        - {x: 64, y: -64}
+      physicsShape:
+      - - {x: 0, y: -16}
+        - {x: 64, y: -16}
+        - {x: 64, y: 0}
+        - {x: 0, y: 0}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a77d3f42253cda1c0800000000000000
+      internalID: -4490718495843821702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_46
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 158
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: -18}
+        - {x: 64, y: 2}
+        - {x: -64, y: 2}
+        - {x: -64, y: -64}
+        - {x: 18, y: -64}
+      physicsShape:
+      - - {x: -64, y: -16}
+        - {x: 64, y: -16}
+        - {x: 64, y: 0}
+        - {x: -64, y: 0}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49be5965488420c90800000000000000
+      internalID: -7205116720613823596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_47
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 158
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 2, y: -16}
+        - {x: 2, y: 0}
+        - {x: 0, y: 2}
+        - {x: -64, y: 2}
+        - {x: -64, y: -64}
+        - {x: -46, y: -64}
+      physicsShape:
+      - - {x: -64, y: -16}
+        - {x: 0, y: -16}
+        - {x: 0, y: 0}
+        - {x: -64, y: 0}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a22a03b725e650a0800000000000000
+      internalID: -6893070220973694299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_48
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 10
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -64}
+        - {x: 64, y: -64}
+      physicsShape:
+      - - {x: -64, y: 48}
+        - {x: 64, y: 48}
+        - {x: 64, y: 64}
+        - {x: -64, y: 64}
+      - - {x: -64, y: -16}
+        - {x: 64, y: -16}
+        - {x: 64, y: 0}
+        - {x: -64, y: 0}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c8969e6e189fe080800000000000000
+      internalID: -9155932260949124924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_49
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 10
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 2, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -64}
+        - {x: 2, y: -64}
+      physicsShape:
+      - - {x: -64, y: 48}
+        - {x: 0, y: 48}
+        - {x: 0, y: 64}
+        - {x: -64, y: 64}
+      - - {x: -64, y: -16}
+        - {x: 0, y: -16}
+        - {x: 0, y: 0}
+        - {x: -64, y: 0}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a011eb0a97ed14d50800000000000000
+      internalID: 6719896732982710538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_50
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 10
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -2, y: 64}
+        - {x: -2, y: -64}
+        - {x: 64, y: -64}
+      physicsShape:
+      - - {x: 0, y: 48}
+        - {x: 64, y: 48}
+        - {x: 64, y: 64}
+        - {x: 0, y: 64}
+      - - {x: 0, y: -16}
+        - {x: 64, y: -16}
+        - {x: 64, y: 0}
+        - {x: 0, y: 0}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9f25f39cea2a29e0800000000000000
+      internalID: -1645455518267527270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DefaultTilemap_51
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 10
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline:
+      - - {x: 64, y: 64}
+        - {x: -64, y: 64}
+        - {x: -64, y: -64}
+        - {x: 64, y: -64}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88f5a52f005069780800000000000000
+      internalID: -8676742130458534008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: e3bc7f6a657fca6408009cbbf2d0671e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      DefaultTilemap_0: -5118385096085657335
+      DefaultTilemap_1: -6824933002013929339
+      DefaultTilemap_10: -2706254201280844472
+      DefaultTilemap_11: -840074432414761121
+      DefaultTilemap_12: -5922429984836151208
+      DefaultTilemap_13: 1176297375962356453
+      DefaultTilemap_14: 5863671363394055511
+      DefaultTilemap_15: -7840569951465399313
+      DefaultTilemap_16: 7281158766936281444
+      DefaultTilemap_17: 2207384595273282075
+      DefaultTilemap_18: -8781201728009054393
+      DefaultTilemap_19: 2899394754149937097
+      DefaultTilemap_2: 7702240187637559653
+      DefaultTilemap_20: -6284919583754429949
+      DefaultTilemap_21: 5409899774835267851
+      DefaultTilemap_22: -916549513185477418
+      DefaultTilemap_23: -4421013148490465581
+      DefaultTilemap_24: -4274458684359719477
+      DefaultTilemap_25: 6126615190416235160
+      DefaultTilemap_26: 5132163408408444457
+      DefaultTilemap_27: -7074339150725186685
+      DefaultTilemap_28: -8382413405020147903
+      DefaultTilemap_29: -3950402042077408530
+      DefaultTilemap_3: -1633077493014826168
+      DefaultTilemap_30: 4421749698142232391
+      DefaultTilemap_31: -8339956929029722528
+      DefaultTilemap_32: 3674812555211487652
+      DefaultTilemap_33: 1762420640624638222
+      DefaultTilemap_34: -6442851803588094140
+      DefaultTilemap_35: 4342648562550704530
+      DefaultTilemap_36: -6598416939299125528
+      DefaultTilemap_37: -1021904258569322567
+      DefaultTilemap_38: 956992341110785058
+      DefaultTilemap_39: 744325523259900593
+      DefaultTilemap_4: 1010392271976272777
+      DefaultTilemap_40: 7396272632711778788
+      DefaultTilemap_41: 7704131223691484856
+      DefaultTilemap_42: 877343400732132758
+      DefaultTilemap_43: 3863270009337365644
+      DefaultTilemap_44: -3756352039790892867
+      DefaultTilemap_45: -4490718495843821702
+      DefaultTilemap_46: -7205116720613823596
+      DefaultTilemap_47: -6893070220973694299
+      DefaultTilemap_48: -9155932260949124924
+      DefaultTilemap_49: 6719896732982710538
+      DefaultTilemap_5: -8006256536645928639
+      DefaultTilemap_50: -1645455518267527270
+      DefaultTilemap_51: -8676742130458534008
+      DefaultTilemap_6: 6205901265903202904
+      DefaultTilemap_7: 1481332265996734877
+      DefaultTilemap_8: 396219976097152974
+      DefaultTilemap_9: -2811900365109562306
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
