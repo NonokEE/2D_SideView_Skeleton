@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1930608693586860321}
-  - component: {fileID: 3299667819658894205}
-  - component: {fileID: 448756372130272253}
   - component: {fileID: 866523592180528595}
   - component: {fileID: 7054933800456832082}
   - component: {fileID: 759466636991791758}
+  - component: {fileID: 3299667819658894205}
+  - component: {fileID: 448756372130272253}
   m_Layer: 0
   m_Name: Primitive Player
   m_TagString: Untagged
@@ -37,40 +37,6 @@ Transform:
   - {fileID: 2815857806576657887}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3299667819658894205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 773566993305598488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a4d2659775c837489e8a982d0dee2e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entityID: 
-  isActive: 1
-  moveSpeed: 5
-  jumpForce: 10
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 257
-  groundCheck: {fileID: 2815857806576657887}
-  groundCheckRadius: 0.1
---- !u!114 &448756372130272253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 773566993305598488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ba6329361e42914bb874394dd923848, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpKey: 32
 --- !u!50 &866523592180528595
 Rigidbody2D:
   serializedVersion: 5
@@ -199,6 +165,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3299667819658894205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773566993305598488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4d2659775c837489e8a982d0dee2e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityID: 
+  isActive: 1
+  moveSpeed: 5
+  jumpForce: 10
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 257
+  groundCheck: {fileID: 2815857806576657887}
+  groundCheckRadius: 0.1
+--- !u!114 &448756372130272253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773566993305598488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ba6329361e42914bb874394dd923848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpKey: 32
 --- !u!1 &5487583998548189072
 GameObject:
   m_ObjectHideFlags: 0
