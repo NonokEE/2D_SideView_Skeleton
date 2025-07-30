@@ -5,7 +5,8 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Input Settings")]
     public KeyCode jumpKey = KeyCode.Space;
-    
+    public KeyCode downKey = KeyCode.S;
+
     private LivingEntity controlledEntity;
     
     private void Start()
@@ -33,9 +34,16 @@ public class PlayerController : MonoBehaviour
     
     private void HandleJumpInput()
     {
-        if (Input.GetKeyDown(jumpKey))
+        // 일반 점프
+        if (Input.GetKeyDown(jumpKey) && !Input.GetKey(downKey))
         {
             controlledEntity.Jump();
+        }
+        
+        // 플랫폼 하강 (아래키+점프 동시)
+        if (Input.GetKeyDown(jumpKey) && Input.GetKey(downKey))
+        {
+            controlledEntity.DropThroughPlatform();
         }
     }
 }

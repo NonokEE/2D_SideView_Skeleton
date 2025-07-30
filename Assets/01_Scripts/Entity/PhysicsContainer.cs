@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
 public class PhysicsContainer : MonoBehaviour
 {
     [Header("Collision Components")]
@@ -69,13 +68,25 @@ public class PhysicsContainer : MonoBehaviour
         );
     }
     
+    public bool IsOnPlatform()
+    {
+        if (groundCheckPoint == null) return false;
+        // Platform 레이어만 체크
+        return Physics2D.OverlapBox(
+            groundCheckPoint.position, 
+            groundCheckSize, 
+            0f, 
+            platformLayer
+        );
+    }
+    
     public bool IsWallLeft()
     {
         if (wallCheckLeft == null) return false;
         return Physics2D.OverlapBox(
-            wallCheckLeft.position, 
-            wallCheckSize, 
-            0f, 
+            wallCheckLeft.position,
+            wallCheckSize,
+            0f,
             groundLayer
         );
     }

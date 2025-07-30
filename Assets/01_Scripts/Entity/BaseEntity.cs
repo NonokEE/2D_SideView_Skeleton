@@ -106,6 +106,11 @@ public abstract class BaseEntity : MonoBehaviour
         return physicsContainer?.IsGrounded() ?? false;
     }
 
+    public bool IsOnPlatform()
+    {
+        return physicsContainer?.IsOnPlatform() ?? false;
+    }
+
     public bool IsWallLeft()
     {
         return physicsContainer?.IsWallLeft() ?? false;
