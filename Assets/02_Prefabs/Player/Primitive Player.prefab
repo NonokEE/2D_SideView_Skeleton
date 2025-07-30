@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca011e3656f4af5478550bb55ea4f955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCollider: {fileID: 588254079064887381}
+  mainCollider: {fileID: 5481776902416106873}
   hitboxCollider: {fileID: 0}
   hurtboxCollider: {fileID: 0}
   groundCheckPoint: {fileID: 1056290839196257449}
@@ -367,7 +367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6945913639753521775}
   - component: {fileID: 1079695587070898863}
-  - component: {fileID: 588254079064887381}
+  - component: {fileID: 5481776902416106873}
   - component: {fileID: 4248525549897310633}
   - component: {fileID: 913196990823180131}
   - component: {fileID: 3693539920426072213}
@@ -422,7 +422,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &588254079064887381
+--- !u!61 &5481776902416106873
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
