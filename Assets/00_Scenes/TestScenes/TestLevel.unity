@@ -3832,49 +3832,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1039454612517986688, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 1056290839196257449, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3195857489834613214, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4966870037457939750, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 5004029689220698861, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
-      propertyPath: wallCheckRadius
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5004029689220698861, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
-      propertyPath: wallCheckSize.y
-      value: 0.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5004029689220698861, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
-      propertyPath: groundCheckRadius
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5004029689220698861, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
-      propertyPath: groundCheckSize.x
+    - target: {fileID: 1115423721558797647, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5004029689220698861, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
-      propertyPath: ceilingCheckRadius
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5004029689220698861, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
-      propertyPath: ceilingCheckSize.x
+    - target: {fileID: 1115423721558797647, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
+      propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5004029689220698861, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
-      propertyPath: groundLayer.m_Bits
-      value: 64
+    - target: {fileID: 4248525549897310633, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
+      propertyPath: jumpForce
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4248525549897310633, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6945913639753521775, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
       propertyPath: m_LocalPosition.x

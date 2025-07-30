@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public abstract class LivingEntity : BaseEntity
 {
@@ -46,6 +47,30 @@ public abstract class LivingEntity : BaseEntity
             visualContainer.transform.localScale = scale;
         }
     }
+
+    public virtual void DropThroughPlatform()
+    {
+        if (entityRigidbody == null) return;
+        
+        // 플랫폼 위에 서있을 때만 하강 가능
+        if (IsGrounded() && IsOnPlatform())
+        {
+            StartCoroutine(TemporaryIgnorePlatform());
+        }
+    }
+
+    private IEnumerator TemporaryIgnorePlatform()
+    {
+        Collider2D playerCollider = physicsContainer.MainCollider;
+        playerCollider.enabled = false;
+        
+        yield return new WaitForSeconds(0.2f);
+        
+        playerCollider.enabled = true;
+        
+    }
+
+
     
     // 이동 제어 메서드들
     public void SetCanMove(bool canMove)

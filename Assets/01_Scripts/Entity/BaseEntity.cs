@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class BaseEntity : MonoBehaviour
 {
@@ -104,6 +105,11 @@ public abstract class BaseEntity : MonoBehaviour
     public bool IsGrounded()
     {
         return physicsContainer?.IsGrounded() ?? false;
+    }
+
+    public bool IsOnPlatform()
+    {
+        return physicsContainer?.IsOnPlatform() ?? false;
     }
 
     public bool IsWallLeft()
