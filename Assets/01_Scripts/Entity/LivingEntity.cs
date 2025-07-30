@@ -38,7 +38,7 @@ public abstract class LivingEntity : BaseEntity
     protected virtual void Flip()
     {
         facingRight = !facingRight;
-        
+
         if (visualContainer != null)
         {
             Vector3 scale = visualContainer.transform.localScale;
@@ -66,9 +66,4 @@ public abstract class LivingEntity : BaseEntity
     // 추상 메서드들 (하위 클래스에서 구현)
     public virtual void Attack() { }
     public virtual void TakeDamage(int damage) { }
-    
-    protected virtual void Update()
-    {
-        // 상태 업데이트 로직 (필요시 하위 클래스에서 오버라이드)
-    }
 }
