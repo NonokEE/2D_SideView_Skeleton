@@ -61,23 +61,16 @@ public abstract class LivingEntity : BaseEntity
 
     private IEnumerator TemporaryIgnorePlatform()
     {
-        // 플랫폼 충돌 임시 비활성화
-        Physics2D.IgnoreLayerCollision(16, 7, true); // Player-Platform 충돌 무시
-
-        if (entityRigidbody != null)
-        {
-            Vector2 velocity = entityRigidbody.linearVelocity;
-            velocity.y = -8f; // 아래로 빠르게 이동
-            entityRigidbody.linearVelocity = velocity;
-        }
-
-        Debug.Log("Ignoring platform collision for 0.5 seconds");
-        yield return new WaitForSeconds(0.5f); // 0.5초 동안 무시
-        Debug.Log("Re-enabling platform collision");
-
-        // 충돌 다시 활성화
-        Physics2D.IgnoreLayerCollision(16, 7, false);
+        Collider2D playerCollider = physicsContainer.MainCollider;
+        playerCollider.enabled = false;
+        
+        yield return new WaitForSeconds(0.2f);
+        
+        playerCollider.enabled = true;
+        
     }
+
+
     
     // 이동 제어 메서드들
     public void SetCanMove(bool canMove)
