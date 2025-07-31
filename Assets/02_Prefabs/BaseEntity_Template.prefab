@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4117548426303811931}
   - component: {fileID: 2545745684695740025}
   - component: {fileID: 4771751492733767622}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: VisualContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 1756888760891446503}
   - component: {fileID: 4694931095470474415}
   - component: {fileID: 5460658484391115463}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: BaseEntity_Template
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1826517730143603936}
   - component: {fileID: 4534095307058195564}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: PhysicsContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCollider: {fileID: 5460658484391115463}
-  hitboxCollider: {fileID: 0}
   hurtboxCollider: {fileID: 0}
   groundCheckPoint: {fileID: 0}
   wallCheckLeft: {fileID: 0}

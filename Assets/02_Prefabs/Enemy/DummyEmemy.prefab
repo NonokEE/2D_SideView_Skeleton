@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2690785018635289899}
   - component: {fileID: 3548025497230475912}
   - component: {fileID: 2416261599378049624}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: VisualContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 8480197925694794162}
   - component: {fileID: 1384761940389658813}
   - component: {fileID: 7779709809564919663}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: PhysicsContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +196,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -223,7 +223,8 @@ GameObject:
   - component: {fileID: 2526774841956619993}
   - component: {fileID: 1583132726430106999}
   - component: {fileID: 819526003581912098}
-  m_Layer: 0
+  - component: {fileID: 8294561070455103720}
+  m_Layer: 17
   m_Name: DummyEmemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +274,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &819526003581912098
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -320,3 +321,23 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8294561070455103720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4251326452225502877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22bf78e435eca3d47a6bed36747e4b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visualContainer: {fileID: 2416261599378049624}
+  physicsContainer: {fileID: 1384761940389658813}
+  entityID: Dummy_01
+  isActive: 1
+  maxHealth: 100
+  currentHealth: 0
+  moveSpeed: 5
+  jumpForce: 10
