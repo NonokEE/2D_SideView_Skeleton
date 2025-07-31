@@ -4,7 +4,6 @@ public class PhysicsContainer : MonoBehaviour
 {
     [Header("Collision Components")]
     [SerializeField] private Collider2D mainCollider;
-    [SerializeField] private Collider2D hitboxCollider;
     [SerializeField] private Collider2D hurtboxCollider;
     
     [Header("Collision Check Points")]
@@ -23,7 +22,6 @@ public class PhysicsContainer : MonoBehaviour
     
     // 프로퍼티들
     public Collider2D MainCollider => mainCollider;
-    public Collider2D HitboxCollider => hitboxCollider;
     public Collider2D HurtboxCollider => hurtboxCollider;
     public Transform GroundCheckPoint => groundCheckPoint;
     
@@ -43,13 +41,7 @@ public class PhysicsContainer : MonoBehaviour
         if (mainCollider != null)
             mainCollider.enabled = enabled;
     }
-    
-    public void SetHitboxEnabled(bool enabled)
-    {
-        if (hitboxCollider != null)
-            hitboxCollider.enabled = enabled;
-    }
-    
+
     public void SetHurtboxEnabled(bool enabled)
     {
         if (hurtboxCollider != null)
