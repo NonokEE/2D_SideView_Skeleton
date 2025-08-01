@@ -4,6 +4,10 @@ public class PlayerEntity : LivingEntity
 {
     [Header("Player Specific")]
     private PlayerAnimationManager animationManager;
+
+    [Header("Weapon System")]
+    [SerializeField] private BaseWeapon currentWeapon;
+    [SerializeField] private Transform firePoint;
     
     protected override void Awake()
     {
@@ -41,6 +45,7 @@ public class PlayerEntity : LivingEntity
     
     public override void TakeDamage(int damage)
     {
+        base.TakeDamage(damage);
         // 피격 애니메이션 실행
         if (animationManager != null)
             animationManager.PlayHitAnimation();
@@ -48,10 +53,44 @@ public class PlayerEntity : LivingEntity
         Debug.Log($"Player took {damage} damage");
     }
     
-    public override void Attack()
+    // Weapon 관련 메서드
+    public void SetWeapon(BaseWeapon weapon)
     {
-        // TODO: 공격 시스템 구현 예정
-        Debug.Log("Player Attack - Not implemented yet");
+        currentWeapon = weapon;
+        if (currentWeapon != null)
+            currentWeapon.Initialize(this);
+    }
+
+    public void HandleWeaponInput(MouseInputType MouseinputType, Vector2 aimDirection)
+    {
+        if (currentWeapon == null) return;
+        
+        switch (MouseinputType)
+        {
+            case MouseInputType.LeftDown:
+                currentWeapon.OnLeftDown(aimDirection);
+                break;
+            case MouseInputType.LeftHold:
+                currentWeapon.OnLeftHold(aimDirection);
+                break;
+            case MouseInputType.LeftUp:
+                currentWeapon.OnLeftUp(aimDirection);
+                break;
+            case MouseInputType.RightDown:
+                currentWeapon.OnRightDown(aimDirection);
+                break;
+            case MouseInputType.RightHold:
+                currentWeapon.OnRightHold(aimDirection);
+                break;
+            case MouseInputType.RightUp:
+                currentWeapon.OnRightUp(aimDirection);
+                break;
+        }
+    }
+
+    public Transform GetFirePoint()
+    {
+        return firePoint;
     }
     
     // 디버깅용 메서드

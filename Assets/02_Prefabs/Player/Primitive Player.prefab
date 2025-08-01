@@ -49,7 +49,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCollider: {fileID: 5481776902416106873}
-  hitboxCollider: {fileID: 0}
   hurtboxCollider: {fileID: 0}
   groundCheckPoint: {fileID: 1056290839196257449}
   wallCheckLeft: {fileID: 4966870037457939750}
@@ -160,6 +159,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4494114957916209543}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5822257135099918853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8393818187124661132}
+  m_Layer: 16
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8393818187124661132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822257135099918853}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6945913639753521775}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5884584497756497951
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +298,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1615100201
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 402dd4e843a7bc94b98d6e5824b2f73e, type: 3}
   m_Color: {r: 0, g: 0, b: 1, a: 1}
@@ -393,6 +423,7 @@ Transform:
   m_Children:
   - {fileID: 2815852583386895270}
   - {fileID: 4494114957916209543}
+  - {fileID: 8393818187124661132}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1079695587070898863
@@ -483,9 +514,13 @@ MonoBehaviour:
   visualContainer: {fileID: 4440323686471860139}
   physicsContainer: {fileID: 5004029689220698861}
   entityID: Player_01
-  isActive: 1
+  maxHealth: 100
+  currentHealth: 0
+  isInvincible: 0
   moveSpeed: 5
   jumpForce: 15
+  currentWeapon: {fileID: 2999848236911869932, guid: 31f5ead0efb45b14b85647928b6998a1, type: 3}
+  firePoint: {fileID: 8393818187124661132}
 --- !u!114 &913196990823180131
 MonoBehaviour:
   m_ObjectHideFlags: 0
