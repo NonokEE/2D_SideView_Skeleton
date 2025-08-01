@@ -18,14 +18,22 @@ public class PistolWeapon : BaseWeapon
     {
         Debug.Log($"Pistol fired! Direction: {direction}");
 
-        // TODO: 다음 단계에서 실제 총알 생성
-        // if (bulletPrefab != null && owner != null)
-        // {
-        //     Transform firePoint = (owner as PlayerEntity)?.GetFirePoint();
-        //     if (firePoint != null)
-        //     {
-        //         Instantiate(bulletPrefab, firePoint.position, Quaternion.LookRotation(Vector3.forward, direction));
-        //     }
-        // }
+        if (bulletPrefab != null && owner != null)
+        {
+            PlayerEntity playerEntity = owner as PlayerEntity;
+            Transform firePoint = playerEntity?.GetFirePoint();
+
+            if (firePoint != null)
+            {
+                // 총알 생성
+                GameObject bulletObj = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+                ProjectileEntity projectile = bulletObj.GetComponent<ProjectileEntity>();
+
+                if (projectile != null)
+                {
+                    projectile.Initialize(owner, this, direction, damage);
+                }
+            }
+        }
     }
 }
