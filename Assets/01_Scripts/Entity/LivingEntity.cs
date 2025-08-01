@@ -3,14 +3,6 @@ using System.Collections;
 
 public abstract class LivingEntity : BaseEntity
 {
-    [Header("Health System")]
-    [SerializeField] private int maxHealth = 100;
-    [SerializeField] private int currentHealth;
-
-    public int MaxHealth => maxHealth;
-    public int CurrentHealth => currentHealth;
-    public bool IsAlive => currentHealth > 0;
-
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
@@ -20,44 +12,10 @@ public abstract class LivingEntity : BaseEntity
     protected bool canMove = true;
     protected bool canJump = true;
 
-
     protected override void Awake()
     {
         base.Awake();
-        currentHealth = maxHealth; // 체력 초기화
     }
-    /** 체력 관련 **/
-    public virtual void TakeDamage(int damage)
-    {
-        if (!IsAlive) return;
-        
-        currentHealth = Mathf.Max(0, currentHealth - damage);
-        Debug.Log($"{entityID} took {damage} damage. Health: {currentHealth}/{maxHealth}");
-        
-        // 피격 애니메이션 (하위 클래스에서 구현)
-        OnTakeDamage(damage);
-        
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
-    
-    public virtual void Heal(int amount)
-    {
-        if (!IsAlive) return;
-        
-        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
-        Debug.Log($"{entityID} healed {amount}. Health: {currentHealth}/{maxHealth}");
-    }
-    
-    protected virtual void Die()
-    {
-        Debug.Log($"{entityID} died!");
-        OnDie();
-    }
-    protected virtual void OnTakeDamage(int damage) { }
-    protected virtual void OnDie() { }
 
     /** 기본 이동 **/
     public virtual void Move(float horizontal)

@@ -7,23 +7,31 @@ public abstract class BaseEntity : MonoBehaviour
     [Header("Entity Containers")]
     [SerializeField] protected VisualContainer visualContainer;
     [SerializeField] protected PhysicsContainer physicsContainer;
+    public VisualContainer Visual => visualContainer;
+    public PhysicsContainer Physics => physicsContainer;
 
     [Header("Entity Properties")]
     public string entityID;
-    public bool isActive = true;
+
+    [Header("Health System")]
+    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private int currentHealth;
+    [SerializeField] private bool isInvincible = false;
+    public int MaxHealth => maxHealth;
+    public int CurrentHealth => currentHealth;
+    public bool IsInvincible => isInvincible;
+    public bool IsAlive => currentHealth > 0;
 
     [Header("Physics Components (Root)")]
     protected Rigidbody2D entityRigidbody;
-
-    // 컨테이너 접근 프로퍼티
-    public VisualContainer Visual => visualContainer;
-    public PhysicsContainer Physics => physicsContainer;
     public Rigidbody2D EntityRigidbody => entityRigidbody;
 
+    // 초기화 관련 메서드들
     protected virtual void Awake()
     {
         InitializeComponents();
         InitializeContainers();
+        InitializeHealth();
         Initialize();
     }
 
@@ -65,7 +73,50 @@ public abstract class BaseEntity : MonoBehaviour
         }
     }
 
+    protected virtual void InitializeHealth()
+    {
+        currentHealth = maxHealth;
+    }
+
     public abstract void Initialize();
+
+    // 체력 관련 메서드들
+    public virtual void TakeDamage(int damage)
+    {
+        if (isInvincible || !IsAlive) return;
+        
+        currentHealth = Mathf.Max(0, currentHealth - damage);
+        Debug.Log($"{entityID} took {damage} damage. Health: {currentHealth}/{maxHealth}");
+        
+        OnDamageTaken(damage);
+        
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+    
+    public virtual void Heal(int amount)
+    {
+        if (!IsAlive) return;
+        
+        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        OnHealed(amount);
+    }
+    
+    public virtual void SetInvincible(bool invincible)
+    {
+        isInvincible = invincible;
+    }
+
+    protected virtual void OnDamageTaken(int damage) { }
+    protected virtual void OnHealed(int amount) { }
+    protected virtual void OnDie() { }
+    protected virtual void Die()
+    {
+        Debug.Log($"{entityID} died!");
+        OnDie();
+    }
 
     // Physics 관련 편의 메서드들 (Root의 Rigidbody2D 사용)
     public Vector2 GetVelocity()
