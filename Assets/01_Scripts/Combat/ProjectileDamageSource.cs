@@ -1,4 +1,3 @@
-// Assets/01_Scripts/Combat/ProjectileDamageSource.cs
 using System.Collections;
 using UnityEngine;
 

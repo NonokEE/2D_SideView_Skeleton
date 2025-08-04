@@ -1,4 +1,3 @@
-// Assets/01_Scripts/Combat/DamageSourceEntity.cs
 using System.Collections.Generic;
 using UnityEngine;
 

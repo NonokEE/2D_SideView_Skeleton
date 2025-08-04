@@ -3,8 +3,7 @@ using UnityEngine;
 public class PistolWeapon : BaseWeapon
 {
     [Header("Pistol Settings")]
-    public GameObject bulletPrefab; // 임시로 null, 다음 단계에서 구현
-
+    public DamageSourceEntity bulletPrefab;
     public override void OnLeftDown(Vector2 aimDirection)
     {
         if (CanFire())
@@ -16,16 +15,53 @@ public class PistolWeapon : BaseWeapon
 
     private void Fire(Vector2 direction)
     {
-        Debug.Log($"Pistol fired! Direction: {direction}");
-
-        // TODO: 다음 단계에서 실제 총알 생성
-        // if (bulletPrefab != null && owner != null)
-        // {
-        //     Transform firePoint = (owner as PlayerEntity)?.GetFirePoint();
-        //     if (firePoint != null)
-        //     {
-        //         Instantiate(bulletPrefab, firePoint.position, Quaternion.LookRotation(Vector3.forward, direction));
-        //     }
-        // }
+        Debug.Log("Fire method called!");
+        
+        if (bulletPrefab == null)
+        {
+            Debug.LogError("Bullet Prefab is null!");
+            return;
+        }
+        
+        if (owner == null)
+        {
+            Debug.LogError("Owner is null!");
+            return;
+        }
+        
+        PlayerEntity playerEntity = owner as PlayerEntity;
+        if (playerEntity == null)
+        {
+            Debug.LogError("Owner is not PlayerEntity!");
+            return;
+        }
+        
+        Transform firePoint = playerEntity.GetFirePoint();
+        if (firePoint == null)
+        {
+            Debug.LogError("FirePoint is null!");
+            return;
+        }
+        
+        Debug.Log($"Creating bullet at {firePoint.position}");
+        
+        // 탄환 생성
+        DamageSourceEntity bullet = Instantiate(bulletPrefab, firePoint.position, 
+            Quaternion.LookRotation(Vector3.forward, direction));
+        
+        Debug.Log("Bullet created successfully!");
+        
+        // DamageSource 초기화
+        StraightBullet bulletComponent = bullet.GetComponent<StraightBullet>();
+        if (bulletComponent != null)
+        {
+            bulletComponent.Initialize(owner, this);
+            Debug.Log("Bullet initialized!");
+        }
+        else
+        {
+            Debug.LogError("StraightBullet component not found!");
+        }
     }
+
 }

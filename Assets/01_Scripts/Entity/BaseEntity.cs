@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
@@ -81,27 +82,19 @@ public abstract class BaseEntity : MonoBehaviour
     public abstract void Initialize();
 
     // 체력 관련 메서드들
-    public virtual void TakeDamage(int damage)
-    {
-        if (isInvincible || !IsAlive) return;
-
-        currentHealth = Mathf.Max(0, currentHealth - damage);
-        Debug.Log($"{entityID} took {damage} damage. Health: {currentHealth}/{maxHealth}");
-
-        OnDamageTaken(damage);
-
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
+    /// <summary>
+    /// Entity가 피해를 받았을 때 호출되는 메서드.
+    /// 매개변수로 DamageData를 받으며, 실제 게임에서는 이 구조를 사용해야 함.
+    /// Legacy 메서드인 TakeDamage(int damage)는 디버그용으로만 사용
+    /// </summary>  
     public virtual void TakeDamage(DamageData damageData)
     {
         if (isInvincible || !IsAlive) return;
 
-        int damage = damageData.damage;
-        currentHealth = Mathf.Max(0, currentHealth - damage);
-        Debug.Log($"{entityID} took {damage} damage from {damageData.attacker.entityID}. Health: {currentHealth}/{maxHealth}");
+        int damageAmount = Mathf.RoundToInt(damageData.damage);
+        currentHealth = Mathf.Max(0, currentHealth - damageAmount);
+
+        Debug.Log($"{entityID} took {damageAmount} damage from {damageData.damageSource?.GetType().Name}. Health: {currentHealth}/{maxHealth}");
 
         OnDamageTaken(damageData);
 
@@ -109,6 +102,23 @@ public abstract class BaseEntity : MonoBehaviour
         {
             Die();
         }
+    }
+
+    /// <summary>
+    /// TakeDamageFromContextMenu 등을 위한 디버그용.
+    /// 실제 게임 구현에서는 DamageData를 사용해야 함.
+    /// </summary>
+    /// <param name="damage"></param>
+    public virtual void TakeDamage(int damage)
+    {
+        DamageData legacyDamage = new DamageData
+        {
+            attacker = null,
+            target = this,
+            damageSource = null,
+            damage = damage
+        };
+        TakeDamage(legacyDamage);
     }
     
     public virtual void Heal(int amount)
@@ -124,7 +134,6 @@ public abstract class BaseEntity : MonoBehaviour
         isInvincible = invincible;
     }
 
-    protected virtual void OnDamageTaken(int damage) { }
     protected virtual void OnDamageTaken(DamageData damageData) { }
     protected virtual void OnHealed(int amount) { }
     protected virtual void OnDie() { }
