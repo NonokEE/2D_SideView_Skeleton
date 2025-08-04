@@ -4,7 +4,7 @@ public abstract class BaseWeapon : MonoBehaviour
 {
     [Header("Weapon Properties")]
     public string weaponName;
-    public float damage = 10f;
+    public int damage = 10;
     public float fireRate = 1f;
     
     protected float lastFireTime;

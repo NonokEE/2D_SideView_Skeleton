@@ -84,12 +84,27 @@ public abstract class BaseEntity : MonoBehaviour
     public virtual void TakeDamage(int damage)
     {
         if (isInvincible || !IsAlive) return;
-        
+
         currentHealth = Mathf.Max(0, currentHealth - damage);
         Debug.Log($"{entityID} took {damage} damage. Health: {currentHealth}/{maxHealth}");
-        
+
         OnDamageTaken(damage);
-        
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+    public virtual void TakeDamage(DamageData damageData)
+    {
+        if (isInvincible || !IsAlive) return;
+
+        int damage = damageData.damage;
+        currentHealth = Mathf.Max(0, currentHealth - damage);
+        Debug.Log($"{entityID} took {damage} damage from {damageData.attacker.entityID}. Health: {currentHealth}/{maxHealth}");
+
+        OnDamageTaken(damageData);
+
         if (currentHealth <= 0)
         {
             Die();
@@ -99,7 +114,7 @@ public abstract class BaseEntity : MonoBehaviour
     public virtual void Heal(int amount)
     {
         if (!IsAlive) return;
-        
+
         currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
         OnHealed(amount);
     }
@@ -110,6 +125,7 @@ public abstract class BaseEntity : MonoBehaviour
     }
 
     protected virtual void OnDamageTaken(int damage) { }
+    protected virtual void OnDamageTaken(DamageData damageData) { }
     protected virtual void OnHealed(int amount) { }
     protected virtual void OnDie() { }
     protected virtual void Die()

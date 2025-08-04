@@ -43,14 +43,14 @@ public class PlayerEntity : LivingEntity
         base.Jump();
     }
     
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(DamageData damageData)
     {
-        base.TakeDamage(damage);
+        base.TakeDamage(damageData);
         // 피격 애니메이션 실행
         if (animationManager != null)
             animationManager.PlayHitAnimation();
             
-        Debug.Log($"Player took {damage} damage");
+        Debug.Log($"Player took {damageData.damage} damage");
     }
     
     // Weapon 관련 메서드
