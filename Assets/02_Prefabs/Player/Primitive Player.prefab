@@ -519,8 +519,9 @@ MonoBehaviour:
   isInvincible: 0
   moveSpeed: 5
   jumpForce: 15
-  currentWeapon: {fileID: 2999848236911869932, guid: 31f5ead0efb45b14b85647928b6998a1, type: 3}
+  weaponPrefab: {fileID: 6287356642904179592, guid: 31f5ead0efb45b14b85647928b6998a1, type: 3}
   firePoint: {fileID: 8393818187124661132}
+  currentWeapon: {fileID: 0}
 --- !u!114 &913196990823180131
 MonoBehaviour:
   m_ObjectHideFlags: 0

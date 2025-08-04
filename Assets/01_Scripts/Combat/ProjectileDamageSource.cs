@@ -8,16 +8,33 @@ public abstract class ProjectileDamageSource : DamageSourceEntity
     public bool destroyOnHit = true;
     public float lifeTime = 5f;
     
+    protected Vector2 moveDirection = Vector2.right;
     protected Coroutine lifetimeCoroutine;
     
     protected override void Awake()
     {
         base.Awake();
-        InitializeMovement();
-        
-        // Coroutine으로 생명주기 관리
+
         if (lifeTime > 0)
             lifetimeCoroutine = StartCoroutine(LifetimeCoroutine());
+    }
+
+    
+    public virtual void SetDirection(Vector2 direction)
+    {
+        moveDirection = direction.normalized;
+
+        // 탄환 회전 설정
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        // 즉시 velocity 업데이트
+        if (entityRigidbody != null)
+        {
+            entityRigidbody.linearVelocity = moveDirection * speed;
+        }
+
+        Debug.Log($"Projectile direction set to: {moveDirection}, velocity: {entityRigidbody?.linearVelocity}");
     }
     
     private IEnumerator LifetimeCoroutine()
@@ -28,9 +45,10 @@ public abstract class ProjectileDamageSource : DamageSourceEntity
     
     protected virtual void InitializeMovement()
     {
-        // 기본 직선 이동 (transform.right 방향)
-        if (entityRigidbody != null)
-            entityRigidbody.linearVelocity = transform.right * speed;
+        if (entityRigidbody != null && entityRigidbody.linearVelocity.magnitude < 0.1f)
+        {
+            entityRigidbody.linearVelocity = moveDirection * speed;
+        }
     }
     
     private void OnTriggerEnter2D(Collider2D other)

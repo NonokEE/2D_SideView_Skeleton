@@ -15,9 +15,9 @@ public abstract class BaseEntity : MonoBehaviour
     public string entityID;
 
     [Header("Health System")]
-    [SerializeField] private int maxHealth = 100;
-    [SerializeField] private int currentHealth;
-    [SerializeField] private bool isInvincible = false;
+    [SerializeField] protected int maxHealth = 100;
+    [SerializeField] protected int currentHealth;
+    [SerializeField] protected bool isInvincible = false;
     public int MaxHealth => maxHealth;
     public int CurrentHealth => currentHealth;
     public bool IsInvincible => isInvincible;

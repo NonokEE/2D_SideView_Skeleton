@@ -47,4 +47,4 @@ MonoBehaviour:
   weaponName: Basic Pistol
   damage: 10
   fireRate: 2
-  bulletPrefab: {fileID: 7450352498471087031, guid: fbb9dddab608af040bc405630b4c9a65, type: 3}
+  bulletPrefab: {fileID: 8513593951664315477, guid: fbb9dddab608af040bc405630b4c9a65, type: 3}

@@ -8,23 +8,38 @@ public class PlayerController : MonoBehaviour
     public KeyCode downKey = KeyCode.S;
 
     private LivingEntity controlledEntity;
-
+    private PlayerEntity playerEntity;
+    private bool isInitialized = false;
+    
     private void Start()
     {
         controlledEntity = GetComponent<LivingEntity>();
+        playerEntity = controlledEntity as PlayerEntity;
+        
         if (controlledEntity == null)
         {
             Debug.LogError("PlayerController: LivingEntity component not found!");
         }
+        
+        // 초기화 완료 대기
+        StartCoroutine(WaitForInitialization());
+    }
+
+    private System.Collections.IEnumerator WaitForInitialization()
+    {
+        // PlayerEntity의 Initialize()가 완료될 때까지 대기
+        yield return new WaitForEndOfFrame();
+        isInitialized = true;
+        Debug.Log("PlayerController initialization complete");
     }
 
     private void Update()
     {
-        if (controlledEntity == null) return;
-
+        if (!isInitialized || controlledEntity == null) return;
+        
         HandleMovementInput();
         HandleJumpInput();
-        HandleWeaponInput(); // 새로 추가
+        HandleWeaponInput();
     }
 
     private void HandleMovementInput()
@@ -50,20 +65,21 @@ public class PlayerController : MonoBehaviour
     
     private void HandleWeaponInput()
     {
-        PlayerEntity playerEntity = controlledEntity as PlayerEntity;
         if (playerEntity == null) return;
         
-        // 마우스 방향 계산
         Vector2 aimDirection = GetAimDirection();
         
         // 좌클릭 처리
         if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log($"Left click detected, aim direction: {aimDirection}");
             playerEntity.HandleWeaponInput(MouseInputType.LeftDown, aimDirection);
+        }
         else if (Input.GetMouseButton(0))
             playerEntity.HandleWeaponInput(MouseInputType.LeftHold, aimDirection);
         else if (Input.GetMouseButtonUp(0))
             playerEntity.HandleWeaponInput(MouseInputType.LeftUp, aimDirection);
-        
+            
         // 우클릭 처리
         if (Input.GetMouseButtonDown(1))
             playerEntity.HandleWeaponInput(MouseInputType.RightDown, aimDirection);
@@ -75,6 +91,12 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 GetAimDirection()
     {
+        if (Camera.main == null)
+        {
+            Debug.LogWarning("Main camera not found");
+            return Vector2.right;
+        }
+        
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0;
         
