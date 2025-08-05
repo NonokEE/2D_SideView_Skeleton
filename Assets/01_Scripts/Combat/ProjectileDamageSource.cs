@@ -34,7 +34,7 @@ public abstract class ProjectileDamageSource : DamageSourceEntity
             entityRigidbody.linearVelocity = moveDirection * speed;
         }
 
-        Debug.Log($"Projectile direction set to: {moveDirection}, velocity: {entityRigidbody?.linearVelocity}");
+        //*Debug.Log($"Projectile direction set to: {moveDirection}, velocity: {entityRigidbody?.linearVelocity}");
     }
     
     private IEnumerator LifetimeCoroutine()

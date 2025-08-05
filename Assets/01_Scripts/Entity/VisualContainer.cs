@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class VisualContainer : MonoBehaviour
@@ -9,6 +10,10 @@ public class VisualContainer : MonoBehaviour
     
     [Header("Animation Managers")]
     [SerializeField] private BaseGeometricAnimator[] geometricAnimators;
+    
+    [Header("Invincibility Visual Effects")]
+    private Coroutine blinkCoroutine;
+    private bool isBlinking = false;
     
     private Vector3 originalLocalPosition;
     private Vector3 originalLocalScale;
@@ -23,6 +28,17 @@ public class VisualContainer : MonoBehaviour
     {
         InitializeComponents();
         StoreOriginalValues();
+    }
+    
+    private void Start()
+    {
+        // BaseEntity의 무적 이벤트 구독
+        BaseEntity entity = GetComponentInParent<BaseEntity>();
+        if (entity != null)
+        {
+            entity.OnInvincibilityStart += OnInvincibilityStart;
+            entity.OnInvincibilityEnd += OnInvincibilityEnd;
+        }
     }
     
     private void InitializeComponents()
@@ -41,24 +57,106 @@ public class VisualContainer : MonoBehaviour
     {
         originalLocalPosition = transform.localPosition;
         originalLocalScale = transform.localScale;
-        originalColor = spriteRenderer.color;
+        if (spriteRenderer != null)
+            originalColor = spriteRenderer.color;
     }
     
+    // 무적 이벤트 핸들러들
+    private void OnInvincibilityStart(InvincibilityType type, float duration)
+    {
+        // 시각적 효과가 필요 없는 타입은 제외
+        if (type == InvincibilityType.CutsceneInvincibility) return;
+        
+        Color effectColor = InvincibilityHelper.GetEffectColor(type);
+        float blinkInterval = InvincibilityHelper.GetBlinkInterval(type);
+        
+        StartBlinkEffect(effectColor, blinkInterval);
+    }
+    
+    private void OnInvincibilityEnd(InvincibilityType type)
+    {
+        // 더 이상 무적 상태가 없으면 깜빡임 중지
+        BaseEntity entity = GetComponentInParent<BaseEntity>();
+        if (entity != null && !entity.IsInvincible())
+        {
+            StopBlinkEffect();
+        }
+    }
+    
+    // 깜빡임 효과 관리
+    public void StartBlinkEffect(Color blinkColor, float interval)
+    {
+        if (spriteRenderer == null) return;
+        
+        StopBlinkEffect();
+        blinkCoroutine = StartCoroutine(BlinkCoroutine(blinkColor, interval));
+    }
+    
+    public void StopBlinkEffect()
+    {
+        if (blinkCoroutine != null)
+        {
+            StopCoroutine(blinkCoroutine);
+            blinkCoroutine = null;
+        }
+        
+        // 원래 색상으로 복원
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = originalColor;
+        }
+        
+        isBlinking = false;
+    }
+    
+    private IEnumerator BlinkCoroutine(Color blinkColor, float interval)
+    {
+        isBlinking = true;
+        
+        while (isBlinking)
+        {
+            // 깜빡임 색상으로 변경
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.color = blinkColor;
+            }
+            
+            yield return new WaitForSeconds(interval);
+            
+            // 원래 색상으로 복원
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.color = originalColor;
+            }
+            
+            yield return new WaitForSeconds(interval);
+        }
+    }
+    
+    // 기존 메서드들
     public void ResetToOriginalValues()
     {
         transform.localPosition = originalLocalPosition;
         transform.localScale = originalLocalScale;
-        spriteRenderer.color = originalColor;
+        if (spriteRenderer != null)
+            spriteRenderer.color = originalColor;
     }
     
     public void SetColor(Color color)
     {
-        spriteRenderer.color = color;
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = color;
+            // 깜빡임 중이 아닐 때만 원본 색상 업데이트
+            if (!isBlinking)
+                originalColor = color;
+        }
     }
     
     public void SetSprite(Sprite sprite)
     {
-        spriteRenderer.sprite = sprite;
+        if (spriteRenderer != null)
+            spriteRenderer.sprite = sprite;
     }
     
     public T GetGeometricAnimator<T>() where T : BaseGeometricAnimator
@@ -82,5 +180,20 @@ public class VisualContainer : MonoBehaviour
             if (animator != null && animator.IsPlaying)
                 animator.StopAnimation();
         }
+    }
+    
+    // 정리
+    private void OnDestroy()
+    {
+        // 이벤트 구독 해제
+        BaseEntity entity = GetComponentInParent<BaseEntity>();
+        if (entity != null)
+        {
+            entity.OnInvincibilityStart -= OnInvincibilityStart;
+            entity.OnInvincibilityEnd -= OnInvincibilityEnd;
+        }
+        
+        // 깜빡임 효과 정리
+        StopBlinkEffect();
     }
 }

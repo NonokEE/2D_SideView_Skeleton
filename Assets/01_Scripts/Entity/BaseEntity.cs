@@ -1,5 +1,6 @@
-using System;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -17,17 +18,24 @@ public abstract class BaseEntity : MonoBehaviour
     [Header("Health System")]
     [SerializeField] protected int maxHealth = 100;
     [SerializeField] protected int currentHealth;
-    [SerializeField] protected bool isInvincible = false;
     public int MaxHealth => maxHealth;
     public int CurrentHealth => currentHealth;
-    public bool IsInvincible => isInvincible;
     public bool IsAlive => currentHealth > 0;
+
+    [Header("Invincibility System")]
+    [SerializeField] private Dictionary<InvincibilityType, InvincibilityData> activeInvincibilities 
+        = new Dictionary<InvincibilityType, InvincibilityData>();
+    [SerializeField] private Dictionary<InvincibilityType, Coroutine> invincibilityCoroutines 
+        = new Dictionary<InvincibilityType, Coroutine>();
+
+    public System.Action<InvincibilityType, float> OnInvincibilityStart;
+    public System.Action<InvincibilityType> OnInvincibilityEnd;
 
     [Header("Physics Components (Root)")]
     protected Rigidbody2D entityRigidbody;
     public Rigidbody2D EntityRigidbody => entityRigidbody;
 
-    // 초기화 관련 메서드들
+    // Initialization Methods
     protected virtual void Awake()
     {
         InitializeComponents();
@@ -38,7 +46,6 @@ public abstract class BaseEntity : MonoBehaviour
 
     protected virtual void InitializeComponents()
     {
-        // Root에서 Rigidbody2D 가져오기
         entityRigidbody = GetComponent<Rigidbody2D>();
 
         if (entityRigidbody == null)
@@ -49,14 +56,12 @@ public abstract class BaseEntity : MonoBehaviour
 
     protected virtual void InitializeContainers()
     {
-        // Inspector에서 할당된 것이 우선, null일 때만 찾거나 생성
         if (visualContainer == null)
             visualContainer = GetComponentInChildren<VisualContainer>();
 
         if (physicsContainer == null)
             physicsContainer = GetComponentInChildren<PhysicsContainer>();
 
-        // 여전히 null이면 생성 (마지막 수단)
         if (visualContainer == null)
         {
             GameObject visualObj = new GameObject("VisualContainer");
@@ -81,7 +86,7 @@ public abstract class BaseEntity : MonoBehaviour
 
     public abstract void Initialize();
 
-    // 체력 관련 메서드들
+    // Health Management Methods
     /// <summary>
     /// Entity가 피해를 받았을 때 호출되는 메서드.
     /// 매개변수로 DamageData를 받으며, 실제 게임에서는 이 구조를 사용해야 함.
@@ -89,20 +94,38 @@ public abstract class BaseEntity : MonoBehaviour
     /// </summary>  
     public virtual void TakeDamage(DamageData damageData)
     {
-        if (isInvincible || !IsAlive) return;
-
+        // 무적 상태 확인
+        if (IsInvincible(InvincibilityType.HitInvincibility) || 
+            IsInvincible(InvincibilityType.BuffInvincibility) || 
+            IsInvincible(InvincibilityType.CutsceneInvincibility))
+        {
+            Debug.Log($"{entityID} is invincible, damage ignored");
+            return;
+        }
+        
+        if (!IsAlive) return;
+        
         int damageAmount = Mathf.RoundToInt(damageData.damage);
         currentHealth = Mathf.Max(0, currentHealth - damageAmount);
-
+        
         Debug.Log($"{entityID} took {damageAmount} damage from {damageData.damageSource?.GetType().Name}. Health: {currentHealth}/{maxHealth}");
-
+        
+        // 피격 무적 시작 (가변 무적시간 적용)
+        float invincibilityDuration = CalculateHitInvincibilityDuration(damageData);
+        if (invincibilityDuration > 0)
+        {
+            StartInvincibility(InvincibilityType.HitInvincibility, invincibilityDuration);
+        }
+        
         OnDamageTaken(damageData);
-
+        
         if (currentHealth <= 0)
         {
             Die();
         }
     }
+
+    
 
     /// <summary>
     /// TakeDamageFromContextMenu 등을 위한 디버그용.
@@ -120,7 +143,7 @@ public abstract class BaseEntity : MonoBehaviour
         };
         TakeDamage(legacyDamage);
     }
-    
+
     public virtual void Heal(int amount)
     {
         if (!IsAlive) return;
@@ -128,22 +151,118 @@ public abstract class BaseEntity : MonoBehaviour
         currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
         OnHealed(amount);
     }
-    
-    public virtual void SetInvincible(bool invincible)
-    {
-        isInvincible = invincible;
-    }
 
     protected virtual void OnDamageTaken(DamageData damageData) { }
     protected virtual void OnHealed(int amount) { }
     protected virtual void OnDie() { }
+
     protected virtual void Die()
     {
         Debug.Log($"{entityID} died!");
         OnDie();
     }
+    
+    // Invincibility Management Methods
+    public virtual void StartInvincibility(InvincibilityType type, float duration, bool showEffect = true)
+    {
+        if (duration <= 0) return;
 
-    // Physics 관련 편의 메서드들 (Root의 Rigidbody2D 사용)
+        // 기존 동일 타입 무적이 있다면 정리
+        if (activeInvincibilities.ContainsKey(type))
+        {
+            StopInvincibility(type);
+        }
+
+        // 새 무적 데이터 생성
+        InvincibilityData newInvincibility = new InvincibilityData(type, duration, showEffect);
+        activeInvincibilities[type] = newInvincibility;
+
+        // 코루틴 시작
+        Coroutine invincibilityCoroutine = StartCoroutine(InvincibilityCoroutine(newInvincibility));
+        invincibilityCoroutines[type] = invincibilityCoroutine;
+
+        // 무적 시작 이벤트
+        OnInvincibilityStart?.Invoke(type, duration);
+
+        Debug.Log($"{entityID} started {type} invincibility for {duration} seconds");
+    }
+    
+    // 무적 중지
+    public virtual void StopInvincibility(InvincibilityType type)
+    {
+        if (invincibilityCoroutines.ContainsKey(type))
+        {
+            StopCoroutine(invincibilityCoroutines[type]);
+            invincibilityCoroutines.Remove(type);
+        }
+        
+        if (activeInvincibilities.ContainsKey(type))
+        {
+            activeInvincibilities.Remove(type);
+            OnInvincibilityEnd?.Invoke(type);
+            Debug.Log($"{entityID} stopped {type} invincibility");
+        }
+    }
+    
+    // 무적 상태 확인
+    public virtual bool IsInvincible(InvincibilityType specificType = InvincibilityType.None)
+    {
+        if (specificType != InvincibilityType.None)
+        {
+            return activeInvincibilities.ContainsKey(specificType);
+        }
+        
+        return activeInvincibilities.Count > 0;
+    }
+    
+    // 가장 높은 우선순위 무적 타입 반환
+    public virtual InvincibilityType GetHighestPriorityInvincibility()
+    {
+        if (activeInvincibilities.Count == 0) return InvincibilityType.None;
+        
+        return activeInvincibilities.Keys
+            .OrderByDescending(type => InvincibilityHelper.GetPriority(type))
+            .First();
+    }
+    
+    // 무적 코루틴
+    private System.Collections.IEnumerator InvincibilityCoroutine(InvincibilityData invincibilityData)
+    {
+        while (invincibilityData.remainingTime > 0)
+        {
+            invincibilityData.remainingTime -= Time.deltaTime;
+            yield return null;
+        }
+        
+        // 시간 만료로 무적 해제
+        StopInvincibility(invincibilityData.type);
+    }
+    
+    // 모든 무적 해제
+    public virtual void ClearAllInvincibilities()
+    {
+        var types = activeInvincibilities.Keys.ToList();
+        foreach (var type in types)
+        {
+            StopInvincibility(type);
+        }
+    }
+
+    // 피격 무적시간 계산 (가상 메서드로 하위 클래스에서 오버라이드 가능)
+    protected virtual float CalculateHitInvincibilityDuration(DamageData damageData)
+    {
+        // 방식 1: 고정 무적시간
+        return 0.3f;
+        
+        // 방식 2: 피해량 비례 (주석 처리)
+        // return Mathf.Clamp(damageData.damage * 0.05f, 0.1f, 1.0f);
+        
+        // 방식 3: 체력 비례 (주석 처리)
+        // float healthRatio = currentHealth / (float)maxHealth;
+        // return healthRatio < 0.3f ? 1.0f : 0.3f;
+    }
+
+    // Physics Utility Methods
     public Vector2 GetVelocity()
     {
         return entityRigidbody?.linearVelocity ?? Vector2.zero;
@@ -161,7 +280,7 @@ public abstract class BaseEntity : MonoBehaviour
             entityRigidbody.AddForce(force, mode);
     }
 
-    // Visual 관련 편의 메서드들
+    // Visual Utility Methods
     public void SetSprite(Sprite sprite)
     {
         visualContainer?.SetSprite(sprite);
@@ -177,34 +296,16 @@ public abstract class BaseEntity : MonoBehaviour
         visualContainer?.ResetToOriginalValues();
     }
 
-    // 충돌 검사 편의 메서드들
-    public bool IsGrounded()
-    {
-        return physicsContainer?.IsGrounded() ?? false;
-    }
+    // Collision Detection Methods
+    public bool IsGrounded() => physicsContainer?.IsGrounded() ?? false;
 
-    public bool IsOnPlatform()
-    {
-        return physicsContainer?.IsOnPlatform() ?? false;
-    }
+    public bool IsOnPlatform() => physicsContainer?.IsOnPlatform() ?? false;
 
-    public bool IsWallLeft()
-    {
-        return physicsContainer?.IsWallLeft() ?? false;
-    }
+    public bool IsWallLeft() => physicsContainer?.IsWallLeft() ?? false;
 
-    public bool IsWallRight()
-    {
-        return physicsContainer?.IsWallRight() ?? false;
-    }
+    public bool IsWallRight() => physicsContainer?.IsWallRight() ?? false;
 
-    public bool IsWall(float direction)
-    {
-        return physicsContainer?.IsWall(direction) ?? false;
-    }
+    public bool IsWall(float direction) => physicsContainer?.IsWall(direction) ?? false;
 
-    public bool IsCeiling()
-    {
-        return physicsContainer?.IsCeiling() ?? false;
-    }
+    public bool IsCeiling() => physicsContainer?.IsCeiling() ?? false;
 }
