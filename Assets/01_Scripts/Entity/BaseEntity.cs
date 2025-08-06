@@ -28,9 +28,6 @@ public abstract class BaseEntity : MonoBehaviour
     [SerializeField] private Dictionary<InvincibilityType, Coroutine> invincibilityCoroutines 
         = new Dictionary<InvincibilityType, Coroutine>();
 
-    public System.Action<InvincibilityType, float> OnInvincibilityStart;
-    public System.Action<InvincibilityType> OnInvincibilityEnd;
-
     [Header("Physics Components (Root)")]
     protected Rigidbody2D entityRigidbody;
     public Rigidbody2D EntityRigidbody => entityRigidbody;
@@ -181,9 +178,6 @@ public abstract class BaseEntity : MonoBehaviour
         Coroutine invincibilityCoroutine = StartCoroutine(InvincibilityCoroutine(newInvincibility));
         invincibilityCoroutines[type] = invincibilityCoroutine;
 
-        // 무적 시작 이벤트
-        OnInvincibilityStart?.Invoke(type, duration);
-
         Debug.Log($"{entityID} started {type} invincibility for {duration} seconds");
     }
     
@@ -199,7 +193,6 @@ public abstract class BaseEntity : MonoBehaviour
         if (activeInvincibilities.ContainsKey(type))
         {
             activeInvincibilities.Remove(type);
-            OnInvincibilityEnd?.Invoke(type);
             Debug.Log($"{entityID} stopped {type} invincibility");
         }
     }

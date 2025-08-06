@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerEntity : LivingEntity
 {
     [Header("Player Specific")]
-    private PlayerAnimationManager animationManager;
+    private PlayerAnimationHandler animationManager;
 
     [Header("Weapon System")]
     [SerializeField] private GameObject weaponPrefab;
@@ -15,7 +15,7 @@ public class PlayerEntity : LivingEntity
     protected override void Awake()
     {
         base.Awake();
-        animationManager = GetComponent<PlayerAnimationManager>();
+        animationManager = GetComponent<PlayerAnimationHandler>();
     }
 
     public override void Initialize()
