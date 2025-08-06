@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerEntity : LivingEntity
 {
     [Header("Player Specific")]
-    private PlayerAnimationHandler animationManager;
+    private PlayerAnimationHandler animationHandler;
 
     [Header("Weapon System")]
     [SerializeField] private GameObject weaponPrefab;
@@ -15,7 +15,8 @@ public class PlayerEntity : LivingEntity
     protected override void Awake()
     {
         base.Awake();
-        animationManager = GetComponent<PlayerAnimationHandler>();
+        
+        if (animationHandler == null) animationHandler = GetComponent<PlayerAnimationHandler>();
     }
 
     public override void Initialize()
@@ -45,20 +46,22 @@ public class PlayerEntity : LivingEntity
         if (!IsGrounded()) return;
 
         // 점프 애니메이션 실행
-        if (animationManager != null)
-            animationManager.PlayJumpAnimation();
+        if (animationHandler != null)
+            animationHandler.PlayJumpAnimation();
 
         base.Jump();
     }
 
-    public override void TakeDamage(DamageData damageData)
+    // 피격 시 애니메이션 처리
+    protected override void OnDamageTaken(DamageData damageData)
     {
-        base.TakeDamage(damageData);
+        base.OnDamageTaken(damageData);
+        
         // 피격 애니메이션 실행
-        if (animationManager != null)
-            animationManager.PlayHitAnimation();
-
-        Debug.Log($"Player took {damageData.damage} damage");
+        if (animationHandler != null)
+        {
+            animationHandler.PlayHitAnimation();
+        }
     }
 
     // Weapon 관련 메서드

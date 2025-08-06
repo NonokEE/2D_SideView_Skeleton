@@ -23,6 +23,13 @@ public abstract class BaseEntity : MonoBehaviour
     public bool IsAlive => currentHealth > 0;
 
     [Header("Invincibility System")]
+    [SerializeField] private float hitInvincibilityDuration = 0.3f; // Inspector에서 조정 가능
+    public float HitInvincibilityDuration
+    {
+        get => hitInvincibilityDuration;
+        set => hitInvincibilityDuration = Mathf.Max(0f, value); // 음수 방지
+    }
+
     [SerializeField] private Dictionary<InvincibilityType, InvincibilityData> activeInvincibilities 
         = new Dictionary<InvincibilityType, InvincibilityData>();
     [SerializeField] private Dictionary<InvincibilityType, Coroutine> invincibilityCoroutines 
@@ -91,38 +98,38 @@ public abstract class BaseEntity : MonoBehaviour
     /// </summary>  
     public virtual void TakeDamage(DamageData damageData)
     {
+        if (!IsAlive) return;
+        
         // 무적 상태 확인
-        if (IsInvincible(InvincibilityType.HitInvincibility) || 
-            IsInvincible(InvincibilityType.BuffInvincibility) || 
+        if (IsInvincible(InvincibilityType.HitInvincibility) ||
+            IsInvincible(InvincibilityType.BuffInvincibility) ||
             IsInvincible(InvincibilityType.CutsceneInvincibility))
         {
             Debug.Log($"{entityID} is invincible, damage ignored");
             return;
         }
         
-        if (!IsAlive) return;
-        
         int damageAmount = Mathf.RoundToInt(damageData.damage);
         currentHealth = Mathf.Max(0, currentHealth - damageAmount);
         
         Debug.Log($"{entityID} took {damageAmount} damage from {damageData.damageSource?.GetType().Name}. Health: {currentHealth}/{maxHealth}");
         
-        // 피격 무적 시작 (가변 무적시간 적용)
+        // 1. 무적 시작
         float invincibilityDuration = CalculateHitInvincibilityDuration(damageData);
         if (invincibilityDuration > 0)
         {
             StartInvincibility(InvincibilityType.HitInvincibility, invincibilityDuration);
         }
         
+        // 2. 피격 애니메이션 처리 (하위 클래스에서 구현)
         OnDamageTaken(damageData);
         
+        // 3. 사망 처리
         if (currentHealth <= 0)
         {
             Die();
         }
     }
-
-    
 
     /// <summary>
     /// TakeDamageFromContextMenu 등을 위한 디버그용.
@@ -245,7 +252,7 @@ public abstract class BaseEntity : MonoBehaviour
     protected virtual float CalculateHitInvincibilityDuration(DamageData damageData)
     {
         // 방식 1: 고정 무적시간
-        return 0.3f;
+        return hitInvincibilityDuration;
         
         // 방식 2: 피해량 비례 (주석 처리)
         // return Mathf.Clamp(damageData.damage * 0.05f, 0.1f, 1.0f);
