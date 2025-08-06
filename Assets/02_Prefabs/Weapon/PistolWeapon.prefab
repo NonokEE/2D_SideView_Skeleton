@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Basic Pistol
   damage: 10
-  fireRate: 2
+  fireRate: 5
   bulletPrefab: {fileID: 8513593951664315477, guid: fbb9dddab608af040bc405630b4c9a65, type: 3}

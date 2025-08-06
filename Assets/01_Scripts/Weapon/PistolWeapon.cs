@@ -34,7 +34,7 @@ public class PistolWeapon : BaseWeapon
                     bulletComponent.SetDirection(direction); // 정확한 방향 설정
                 }
                 
-                Debug.Log($"Bullet fired from {firePosition} in direction {direction}");
+                //*Debug.Log($"Bullet fired from {firePosition} in direction {direction}");
             }
         }
     }
