@@ -72,7 +72,6 @@ public class PlayerController : MonoBehaviour
         // 좌클릭 처리
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log($"Left click detected, aim direction: {aimDirection}");
             playerEntity.HandleWeaponInput(MouseInputType.LeftDown, aimDirection);
         }
         else if (Input.GetMouseButton(0))

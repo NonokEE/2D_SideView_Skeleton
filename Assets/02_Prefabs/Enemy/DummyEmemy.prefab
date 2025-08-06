@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2690785018635289899}
   - component: {fileID: 3548025497230475912}
   - component: {fileID: 2416261599378049624}
+  - component: {fileID: 2583155053390844361}
   m_Layer: 17
   m_Name: VisualContainer
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1083643791
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 402dd4e843a7bc94b98d6e5824b2f73e, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
@@ -101,8 +102,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 3548025497230475912}
-  animator: {fileID: 0}
-  geometricAnimators: []
+  geometricAnimators:
+  - {fileID: 2583155053390844361}
+--- !u!114 &2583155053390844361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3587755875737763206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8633c3ef1c4b5d34891c9b1f3925976a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 1
+  playOnStart: 0
+  loop: 0
+  blinkColor: {r: 1, g: 0, b: 0, a: 0.24705882}
+  blinkTotalDuration: 1
+  blinkInterval: 0.05
 --- !u!1 &3661276317448197242
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +243,7 @@ GameObject:
   - component: {fileID: 1583132726430106999}
   - component: {fileID: 819526003581912098}
   - component: {fileID: 8294561070455103720}
+  - component: {fileID: 6758270035497270380}
   m_Layer: 17
   m_Name: DummyEmemy
   m_TagString: Untagged
@@ -256,7 +276,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4251326452225502877}
-  m_BodyType: 2
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -336,8 +356,23 @@ MonoBehaviour:
   visualContainer: {fileID: 2416261599378049624}
   physicsContainer: {fileID: 1384761940389658813}
   entityID: Dummy_01
-  isActive: 1
   maxHealth: 100
   currentHealth: 0
+  hitInvincibilityDuration: 1
   moveSpeed: 5
   jumpForce: 10
+  animationHandler: {fileID: 0}
+--- !u!114 &6758270035497270380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4251326452225502877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 552b8be423232b442b7dfcfd8201e965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showDebugLogs: 1
+  enableHitAnimation: 1

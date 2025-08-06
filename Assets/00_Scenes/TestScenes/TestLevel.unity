@@ -3769,8 +3769,8 @@ MonoBehaviour:
   playOnStart: 0
   loop: 0
   blinkColor: {r: 1, g: 0, b: 0, a: 1}
-  blinkDuration: 0.1
-  blinkCount: 3
+  blinkTotalDuration: 0.6
+  blinkInterval: 0.1
 --- !u!114 &3583683962921048058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3824,6 +3824,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c428e2fee17365489e5c8fde80d7cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showDebugLogs: 1
+  enableJumpAnimation: 1
+  enableHitAnimation: 1
 --- !u!1001 &5851785643240629151
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3877,8 +3880,7 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 5822257135099918853, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
@@ -3890,10 +3892,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1583132726430106999, guid: 9134d02f676344342869ebb905af0c57, type: 3}
-      propertyPath: m_BodyType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2526774841956619993, guid: 9134d02f676344342869ebb905af0c57, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.62
