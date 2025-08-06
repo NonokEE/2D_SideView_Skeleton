@@ -1,19 +1,13 @@
 using UnityEngine;
-using System.Collections;
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class VisualContainer : MonoBehaviour
 {
     [Header("Visual Components")]
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
     
-    [Header("Animation Managers")]
+    [Header("Geometric Animators")]
     [SerializeField] private BaseGeometricAnimator[] geometricAnimators;
-    
-    [Header("Invincibility Visual Effects")]
-    private Coroutine blinkCoroutine;
-    private bool isBlinking = false;
     
     private Vector3 originalLocalPosition;
     private Vector3 originalLocalScale;
@@ -30,27 +24,16 @@ public class VisualContainer : MonoBehaviour
         StoreOriginalValues();
     }
     
-    private void Start()
-    {
-        // BaseEntity의 무적 이벤트 구독
-        BaseEntity entity = GetComponentInParent<BaseEntity>();
-        if (entity != null)
-        {
-            entity.OnInvincibilityStart += OnInvincibilityStart;
-            entity.OnInvincibilityEnd += OnInvincibilityEnd;
-        }
-    }
-    
     private void InitializeComponents()
     {
         if (spriteRenderer == null)
             spriteRenderer = GetComponent<SpriteRenderer>();
-            
+
         if (animator == null)
             animator = GetComponent<Animator>();
-            
+
         if (geometricAnimators == null || geometricAnimators.Length == 0)
-            geometricAnimators = GetComponents<BaseGeometricAnimator>();
+            geometricAnimators = GetComponentsInChildren<BaseGeometricAnimator>();
     }
     
     private void StoreOriginalValues()
@@ -61,79 +44,7 @@ public class VisualContainer : MonoBehaviour
             originalColor = spriteRenderer.color;
     }
     
-    // 무적 이벤트 핸들러들
-    private void OnInvincibilityStart(InvincibilityType type, float duration)
-    {
-        // 시각적 효과가 필요 없는 타입은 제외
-        if (type == InvincibilityType.CutsceneInvincibility) return;
-        
-        Color effectColor = InvincibilityHelper.GetEffectColor(type);
-        float blinkInterval = InvincibilityHelper.GetBlinkInterval(type);
-        
-        StartBlinkEffect(effectColor, blinkInterval);
-    }
-    
-    private void OnInvincibilityEnd(InvincibilityType type)
-    {
-        // 더 이상 무적 상태가 없으면 깜빡임 중지
-        BaseEntity entity = GetComponentInParent<BaseEntity>();
-        if (entity != null && !entity.IsInvincible())
-        {
-            StopBlinkEffect();
-        }
-    }
-    
-    // 깜빡임 효과 관리
-    public void StartBlinkEffect(Color blinkColor, float interval)
-    {
-        if (spriteRenderer == null) return;
-        
-        StopBlinkEffect();
-        blinkCoroutine = StartCoroutine(BlinkCoroutine(blinkColor, interval));
-    }
-    
-    public void StopBlinkEffect()
-    {
-        if (blinkCoroutine != null)
-        {
-            StopCoroutine(blinkCoroutine);
-            blinkCoroutine = null;
-        }
-        
-        // 원래 색상으로 복원
-        if (spriteRenderer != null)
-        {
-            spriteRenderer.color = originalColor;
-        }
-        
-        isBlinking = false;
-    }
-    
-    private IEnumerator BlinkCoroutine(Color blinkColor, float interval)
-    {
-        isBlinking = true;
-        
-        while (isBlinking)
-        {
-            // 깜빡임 색상으로 변경
-            if (spriteRenderer != null)
-            {
-                spriteRenderer.color = blinkColor;
-            }
-            
-            yield return new WaitForSeconds(interval);
-            
-            // 원래 색상으로 복원
-            if (spriteRenderer != null)
-            {
-                spriteRenderer.color = originalColor;
-            }
-            
-            yield return new WaitForSeconds(interval);
-        }
-    }
-    
-    // 기존 메서드들
+    // 원본 값 복구
     public void ResetToOriginalValues()
     {
         transform.localPosition = originalLocalPosition;
@@ -142,14 +53,13 @@ public class VisualContainer : MonoBehaviour
             spriteRenderer.color = originalColor;
     }
     
+    // 기본 시각적 설정
     public void SetColor(Color color)
     {
         if (spriteRenderer != null)
         {
             spriteRenderer.color = color;
-            // 깜빡임 중이 아닐 때만 원본 색상 업데이트
-            if (!isBlinking)
-                originalColor = color;
+            originalColor = color; // 원본 색상 업데이트
         }
     }
     
@@ -157,6 +67,68 @@ public class VisualContainer : MonoBehaviour
     {
         if (spriteRenderer != null)
             spriteRenderer.sprite = sprite;
+    }
+
+    // GeometricAnimator 관리
+    public void PlayGeometricAnimation(int index)
+    {
+        if (IsValidAnimatorIndex(index))
+        {
+            geometricAnimators[index].PlayAnimation();
+            Debug.Log($"Playing geometric animation at index {index}: {geometricAnimators[index].GetType().Name}");
+        }
+        else
+        {
+            Debug.LogWarning($"Invalid animator index: {index}. Available range: 0-{geometricAnimators.Length - 1}");
+        }
+    }
+    
+    public void StopGeometricAnimation(int index)
+    {
+        if (IsValidAnimatorIndex(index))
+        {
+            geometricAnimators[index].StopAnimation();
+            Debug.Log($"Stopped geometric animation at index {index}");
+        }
+    }
+    
+    public BaseGeometricAnimator GetGeometricAnimator(int index)
+    {
+        if (IsValidAnimatorIndex(index))
+        {
+            return geometricAnimators[index];
+        }
+        return null;
+    }
+    
+    public int GetAnimatorCount()
+    {
+        return geometricAnimators?.Length ?? 0;
+    }
+    
+    public bool IsAnimationPlaying(int index)
+    {
+        if (IsValidAnimatorIndex(index))
+        {
+            return geometricAnimators[index].IsPlaying;
+        }
+        return false;
+    }
+    
+    public void StopAllAnimations()
+    {
+        if (geometricAnimators == null) return;
+        
+        foreach (var animator in geometricAnimators)
+        {
+            if (animator != null && animator.IsPlaying)
+                animator.StopAnimation();
+        }
+    }
+    
+    private bool IsValidAnimatorIndex(int index)
+    {
+        return geometricAnimators != null && index >= 0 && index < geometricAnimators.Length;
     }
     
     public T GetGeometricAnimator<T>() where T : BaseGeometricAnimator
@@ -171,29 +143,54 @@ public class VisualContainer : MonoBehaviour
         return null;
     }
     
-    public void StopAllAnimations()
+    public BaseGeometricAnimator GetGeometricAnimatorByType(GeometricAnimationType animationType)
     {
-        if (geometricAnimators == null) return;
+        if (geometricAnimators == null) return null;
         
         foreach (var animator in geometricAnimators)
         {
-            if (animator != null && animator.IsPlaying)
-                animator.StopAnimation();
+            if (animator != null && GetAnimatorType(animator) == animationType)
+                return animator;
         }
+        return null;
     }
     
-    // 정리
-    private void OnDestroy()
+    public int GetAnimatorIndex<T>() where T : BaseGeometricAnimator
     {
-        // 이벤트 구독 해제
-        BaseEntity entity = GetComponentInParent<BaseEntity>();
-        if (entity != null)
-        {
-            entity.OnInvincibilityStart -= OnInvincibilityStart;
-            entity.OnInvincibilityEnd -= OnInvincibilityEnd;
-        }
+        if (geometricAnimators == null) return -1;
         
-        // 깜빡임 효과 정리
-        StopBlinkEffect();
+        for (int i = 0; i < geometricAnimators.Length; i++)
+        {
+            if (geometricAnimators[i] is T)
+                return i;
+        }
+        return -1;
+    }
+    
+    public int GetAnimatorIndexByType(GeometricAnimationType animationType)
+    {
+        if (geometricAnimators == null) return -1;
+        
+        for (int i = 0; i < geometricAnimators.Length; i++)
+        {
+            if (geometricAnimators[i] != null && GetAnimatorType(geometricAnimators[i]) == animationType)
+                return i;
+        }
+        return -1;
+    }
+    
+    // 애니메이터 타입 판별 헬퍼 메서드
+    private GeometricAnimationType GetAnimatorType(BaseGeometricAnimator animator)
+    {
+        switch (animator)
+        {
+            case ColorBlinkAnimator _:
+                return GeometricAnimationType.ColorBlink;
+            case ScaleStretchAnimator _:
+                return GeometricAnimationType.ScaleStretch;
+            // 추가 애니메이터 타입들...
+            default:
+                return GeometricAnimationType.ColorBlink; // 기본값
+        }
     }
 }
