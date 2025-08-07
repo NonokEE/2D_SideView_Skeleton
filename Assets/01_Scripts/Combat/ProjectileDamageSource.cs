@@ -86,7 +86,6 @@ public abstract class ProjectileDamageSource : DamageSourceEntity
     
     protected virtual void OnHitGround() 
     {
-        Debug.Log("Projectile hit ground");
         DestroyProjectile();
     }
     

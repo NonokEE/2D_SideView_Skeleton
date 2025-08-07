@@ -105,7 +105,6 @@ public abstract class BaseEntity : MonoBehaviour
             IsInvincible(InvincibilityType.BuffInvincibility) ||
             IsInvincible(InvincibilityType.CutsceneInvincibility))
         {
-            Debug.Log($"{entityID} is invincible, damage ignored");
             return;
         }
         
@@ -184,8 +183,6 @@ public abstract class BaseEntity : MonoBehaviour
         // 코루틴 시작
         Coroutine invincibilityCoroutine = StartCoroutine(InvincibilityCoroutine(newInvincibility));
         invincibilityCoroutines[type] = invincibilityCoroutine;
-
-        Debug.Log($"{entityID} started {type} invincibility for {duration} seconds");
     }
     
     // 무적 중지
@@ -200,7 +197,6 @@ public abstract class BaseEntity : MonoBehaviour
         if (activeInvincibilities.ContainsKey(type))
         {
             activeInvincibilities.Remove(type);
-            Debug.Log($"{entityID} stopped {type} invincibility");
         }
     }
     
