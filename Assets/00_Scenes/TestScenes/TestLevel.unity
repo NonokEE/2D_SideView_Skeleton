@@ -3838,7 +3838,7 @@ PrefabInstance:
     - target: {fileID: 4248525549897310633, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
       propertyPath: weaponPrefab
       value: 
-      objectReference: {fileID: 8454779348195391729, guid: 5ec815ffbd54ca24887171ae1858142c, type: 3}
+      objectReference: {fileID: 6287356642904179592, guid: 31f5ead0efb45b14b85647928b6998a1, type: 3}
     - target: {fileID: 6945913639753521775, guid: d429cf6e6a6bf9849906e36bdfb54188, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.37
