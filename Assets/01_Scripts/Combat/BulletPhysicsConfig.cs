@@ -1,9 +1,9 @@
 using UnityEngine;
-using UnityEngine.Events;
+using System.Collections.Generic;
 using Combat.Projectiles;
 
-[CreateAssetMenu(fileName = "New BulletConfig", menuName = "Combat/Bullet Config")]
-public class BulletConfig : ScriptableObject
+[CreateAssetMenu(fileName = "New BulletPhysicsConfig", menuName = "Combat/Bullet Physics Config")]
+public class BulletPhysicsConfig : ScriptableObject
 {
     [Header("Basic Info")]
     [SerializeField] private string bulletName = "New Bullet";
@@ -18,6 +18,12 @@ public class BulletConfig : ScriptableObject
     [SerializeField] private AnimationCurve speedCurve = AnimationCurve.Linear(0, 0, 1, 1);
     [SerializeField] private float rotationSpeed = 0f;
     
+    [Header("Movement Type Specific")]
+    [SerializeField] private float sineAmplitude = 1f;       // Sine 이동용
+    [SerializeField] private float sineFrequency = 2f;       // Sine 이동용
+    [SerializeField] private float spiralRadius = 1f;        // Spiral 이동용
+    [SerializeField] private float curveHeight = 2f;         // Curve 이동용
+
     [Header("Homing Properties")]
     [SerializeField] private float homingStrength = 0f;
     [SerializeField] private float homingRange = 5f;
@@ -27,11 +33,17 @@ public class BulletConfig : ScriptableObject
     [SerializeField] private float gravityScale = 1f;
     [SerializeField] private float mass = 0.1f;
     [SerializeField] private float drag = 0f;
-    
+
     [Header("Collider Properties")]
     [SerializeField] private Vector2 colliderSize = new Vector2(0.2f, 0.2f);
     [SerializeField] private Vector2 colliderOffset = Vector2.zero;
     [SerializeField] private BulletCapsuleDirection colliderDirection = BulletCapsuleDirection.Vertical;
+
+    [Header("Target Selection")]
+    [SerializeField] private LayerMask targetLayers = -1;           // 기본적으로 데미지 줄 레이어
+    [SerializeField] private LayerMask obstacleLayers = -1;         // 장애물 레이어
+    [SerializeField] private List<BaseEntity> whitelist = new List<BaseEntity>(); // 강제 타겟
+    [SerializeField] private List<BaseEntity> blacklist = new List<BaseEntity>(); // 제외 타겟
 
     [Header("Collision Behavior")]
     [SerializeField] private HitBehavior enemyHitBehavior = HitBehavior.Stop;
@@ -47,24 +59,18 @@ public class BulletConfig : ScriptableObject
     [SerializeField] private int maxHits = 1;
     [SerializeField] private DeathEffectType deathEffect = DeathEffectType.None;
 
-    [Header("Visual Properties")]
-    [SerializeField] private Color bulletColor = Color.yellow;
-    [SerializeField] private Vector3 bulletScale = new Vector3(0.2f, 0.2f, 1f);
-    [SerializeField] private bool trailEffect = false;
-    [SerializeField] private Color trailColor = Color.white;
-    [SerializeField] private bool glowEffect = false;
-
     [Header("Gameplay Properties")]
     [SerializeField] private float damage = 10f;
     [SerializeField] private float criticalChance = 0f;
     [SerializeField] private float criticalMultiplier = 2f;
     [SerializeField] private float knockbackForce = 5f;
 
-    [Header("Special Effects")]
-    [SerializeField] private UnityEvent onSpawnEffect;
-    [SerializeField] private UnityEvent onHitEnemyEffect;
-    [SerializeField] private UnityEvent onHitWallEffect;
-    [SerializeField] private UnityEvent onDeathEffect;
+    [Header("Performance Properties")]
+    [SerializeField] private bool enableUpdate = true;              // Update 호출 여부
+    [SerializeField] private bool enableFixedUpdate = false;        // FixedUpdate 호출 여부
+    [SerializeField] private bool enableCollisionOptimization = true; // 충돌 최적화 여부
+    [SerializeField] private bool poolingEnabled = true;            // 풀링 사용 여부
+    [SerializeField] private int poolPreloadCount = 10;             // 미리 로드할 개수
 
     // 프로퍼티들 (읽기 전용 접근)
     public string BulletName => bulletName;
@@ -77,6 +83,14 @@ public class BulletConfig : ScriptableObject
     public float AccelerationTime => accelerationTime;
     public AnimationCurve SpeedCurve => speedCurve;
     public float RotationSpeed => rotationSpeed;
+    
+    // Movement Type Specific
+    public float SineAmplitude => sineAmplitude;
+    public float SineFrequency => sineFrequency;
+    public float SpiralRadius => spiralRadius;
+    public float CurveHeight => curveHeight;
+    
+    // Homing Properties
     public float HomingStrength => homingStrength;
     public float HomingRange => homingRange;
     
@@ -90,6 +104,12 @@ public class BulletConfig : ScriptableObject
     public Vector2 ColliderSize => colliderSize;
     public Vector2 ColliderOffset => colliderOffset;
     public BulletCapsuleDirection ColliderDirection => colliderDirection;
+    
+    // Target Selection
+    public LayerMask TargetLayers => targetLayers;
+    public LayerMask ObstacleLayers => obstacleLayers;
+    public List<BaseEntity> Whitelist => whitelist;
+    public List<BaseEntity> Blacklist => blacklist;
     
     // Collision Behavior
     public HitBehavior EnemyHitBehavior => enemyHitBehavior;
@@ -105,24 +125,18 @@ public class BulletConfig : ScriptableObject
     public int MaxHits => maxHits;
     public DeathEffectType DeathEffect => deathEffect;
     
-    // Visual Properties
-    public Color BulletColor => bulletColor;
-    public Vector3 BulletScale => bulletScale;
-    public bool TrailEffect => trailEffect;
-    public Color TrailColor => trailColor;
-    public bool GlowEffect => glowEffect;
-    
     // Gameplay Properties
     public float Damage => damage;
     public float CriticalChance => criticalChance;
     public float CriticalMultiplier => criticalMultiplier;
     public float KnockbackForce => knockbackForce;
     
-    // Special Effects (읽기 전용으로 직접 접근)
-    public UnityEvent OnSpawnEffect => onSpawnEffect;
-    public UnityEvent OnHitEnemyEffect => onHitEnemyEffect;
-    public UnityEvent OnHitWallEffect => onHitWallEffect;
-    public UnityEvent OnDeathEffect => onDeathEffect;
+    // Performance Properties
+    public bool EnableUpdate => enableUpdate;
+    public bool EnableFixedUpdate => enableFixedUpdate;
+    public bool EnableCollisionOptimization => enableCollisionOptimization;
+    public bool PoolingEnabled => poolingEnabled;
+    public int PoolPreloadCount => poolPreloadCount;
 
     // 검증 메서드들
     private void OnValidate()
@@ -151,5 +165,14 @@ public class BulletConfig : ScriptableObject
         criticalChance = Mathf.Clamp01(criticalChance);
         criticalMultiplier = Mathf.Max(1f, criticalMultiplier);
         knockbackForce = Mathf.Max(0f, knockbackForce);
+        
+        // 성능 값 검증
+        poolPreloadCount = Mathf.Max(1, poolPreloadCount);
+        
+        // Movement Type Specific 값 검증
+        sineAmplitude = Mathf.Max(0f, sineAmplitude);
+        sineFrequency = Mathf.Max(0.1f, sineFrequency);
+        spiralRadius = Mathf.Max(0.1f, spiralRadius);
+        curveHeight = Mathf.Max(0f, curveHeight);
     }
 }
