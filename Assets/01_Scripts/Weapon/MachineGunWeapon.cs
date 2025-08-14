@@ -1,10 +1,11 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
 public class MachineGunWeapon : BaseWeapon
 {
     [Header("Machine Gun Settings")]
-    public GameObject bulletPrefab; // StraightBullet 프리팹
+    public GameObject bulletPrefab; // 새로운 Bullet 프리팹
+    public BulletPhysicsConfig bulletConfig; // ✅ Config 직접 참조
     
     [Header("Fire Rate Settings")]
     public float burstFireRate = 8f; // 초당 8발 연사
@@ -27,8 +28,7 @@ public class MachineGunWeapon : BaseWeapon
     
     public override void OnLeftHold(Vector2 aimDirection)
     {
-        // 이미 연속 발사 중이면 방향만 업데이트
-        // (실제로는 방향이 매 프레임 업데이트되므로 별도 처리 불필요)
+        // 이미 연속 발사 중 (방향은 실시간 업데이트됨)
     }
     
     public override void OnLeftUp(Vector2 aimDirection)
@@ -64,7 +64,7 @@ public class MachineGunWeapon : BaseWeapon
         
         while (isFiring)
         {
-            // 현재 마우스 방향 계산 (PlayerController에서 처리하는 방식 활용)
+            // 현재 마우스 방향 계산
             Vector2 currentAimDirection = GetCurrentAimDirection();
             
             Fire(currentAimDirection);
@@ -90,7 +90,7 @@ public class MachineGunWeapon : BaseWeapon
     
     private void Fire(Vector2 direction)
     {
-        if (bulletPrefab != null && owner != null)
+        if (bulletPrefab != null && bulletConfig != null && owner != null)
         {
             PlayerEntity playerEntity = owner as PlayerEntity;
             if (playerEntity != null)
@@ -98,14 +98,15 @@ public class MachineGunWeapon : BaseWeapon
                 // 동적 발사 위치 계산
                 Vector3 firePosition = playerEntity.GetFirePosition(direction);
                 
-                // 탄환 생성
-                GameObject bullet = Instantiate(bulletPrefab, firePosition, Quaternion.identity);
+                // 탄환 생성 (임시: Instantiate 사용)
+                GameObject bulletObj = Instantiate(bulletPrefab, firePosition, Quaternion.identity);
                 
-                // 탄환 초기화 및 방향 설정
-                StraightBullet bulletComponent = bullet.GetComponent<StraightBullet>();
+                // 새로운 Bullet 클래스 초기화
+                Bullet bulletComponent = bulletObj.GetComponent<Bullet>();
                 if (bulletComponent != null)
                 {
-                    bulletComponent.Initialize(owner, this);
+                    // ✅ BulletPhysicsConfig와 함께 초기화
+                    bulletComponent.Initialize(owner, this, bulletConfig);
                     bulletComponent.SetDirection(direction);
                 }
             }

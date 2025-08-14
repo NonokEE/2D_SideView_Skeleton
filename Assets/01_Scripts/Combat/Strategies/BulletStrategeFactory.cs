@@ -3,6 +3,7 @@ using Combat.Projectiles;
 
 public static class BulletStrategyFactory
 {
+    // Movement 전략만 유지
     public static IMovementStrategy CreateMovementStrategy(MovementType type)
     {
         return type switch
@@ -17,6 +18,7 @@ public static class BulletStrategyFactory
         };
     }
 
+    // Lifetime 전략 유지
     public static ILifetimeStrategy CreateLifetimeStrategy(LifetimeType type)
     {
         return type switch
@@ -29,27 +31,7 @@ public static class BulletStrategyFactory
         };
     }
 
-    public static ICollisionStrategy CreateCollisionStrategy(HitBehavior behavior)
-    {
-        return behavior switch
-        {
-            HitBehavior.Stop => new StopCollisionStrategy(),
-            HitBehavior.Pierce => new PierceCollisionStrategy(),
-            HitBehavior.Bounce => new BounceCollisionStrategy(),
-            HitBehavior.Explode => new ExplodeCollisionStrategy(),
-            _ => new StopCollisionStrategy()
-        };
-    }
-
-    public static IEffectStrategy CreateEffectStrategy(DeathEffectType type)
-    {
-        return type switch
-        {
-            DeathEffectType.None => new NoEffectStrategy(),
-            DeathEffectType.Explode => new ExplodeEffectStrategy(),
-            DeathEffectType.PoisonCloud => new PoisonCloudEffectStrategy(),
-            DeathEffectType.Split => new SplitEffectStrategy(),
-            _ => new NoEffectStrategy()
-        };
-    }
+    // ⚠️ 제거된 메서드들 (CollisionAction으로 대체)
+    // CreateCollisionStrategy() - 삭제됨
+    // CreateEffectStrategy() - 삭제됨
 }

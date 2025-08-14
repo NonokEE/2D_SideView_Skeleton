@@ -1,4 +1,3 @@
-// Assets/01_Scripts/Combat/BulletPhysicsEnums.cs
 using UnityEngine;
 
 namespace Combat.Projectiles
@@ -12,15 +11,6 @@ namespace Combat.Projectiles
         Gravity,        // 중력 영향
         Sine,           // 사인파 이동
         Spiral          // 나선 이동
-    }
-
-    [System.Serializable]
-    public enum HitBehavior
-    {
-        Stop,           // 충돌 시 정지/소멸
-        Pierce,         // 관통
-        Bounce,         // 반사
-        Explode         // 폭발
     }
 
     [System.Serializable]
@@ -51,10 +41,12 @@ namespace Combat.Projectiles
     }
 
     [System.Serializable]
-    public enum CollisionResult
+    public enum CollisionActionType
     {
-        Continue,       // 계속 진행
-        Stop,           // 탄환 정지
-        Destroy         // 탄환 파괴
+        Penetrate,      // 관통
+        Bounce,         // 반사  
+        Stop,           // 정지
+        Destroy,        // 파괴
+        SpawnEntity     // Entity 생성
     }
 }

@@ -19,10 +19,10 @@ public class BulletPhysicsConfig : ScriptableObject
     [SerializeField] private float rotationSpeed = 0f;
     
     [Header("Movement Type Specific")]
-    [SerializeField] private float sineAmplitude = 1f;       // Sine 이동용
-    [SerializeField] private float sineFrequency = 2f;       // Sine 이동용
-    [SerializeField] private float spiralRadius = 1f;        // Spiral 이동용
-    [SerializeField] private float curveHeight = 2f;         // Curve 이동용
+    [SerializeField] private float sineAmplitude = 1f;
+    [SerializeField] private float sineFrequency = 2f;
+    [SerializeField] private float spiralRadius = 1f;
+    [SerializeField] private float curveHeight = 2f;
 
     [Header("Homing Properties")]
     [SerializeField] private float homingStrength = 0f;
@@ -40,17 +40,14 @@ public class BulletPhysicsConfig : ScriptableObject
     [SerializeField] private BulletCapsuleDirection colliderDirection = BulletCapsuleDirection.Vertical;
 
     [Header("Target Selection")]
-    [SerializeField] private LayerMask targetLayers = -1;           // 기본적으로 데미지 줄 레이어
-    [SerializeField] private LayerMask obstacleLayers = -1;         // 장애물 레이어
-    [SerializeField] private List<BaseEntity> whitelist = new List<BaseEntity>(); // 강제 타겟
-    [SerializeField] private List<BaseEntity> blacklist = new List<BaseEntity>(); // 제외 타겟
+    [SerializeField] private LayerMask targetLayers = -1;
+    [SerializeField] private LayerMask obstacleLayers = -1;
+    [SerializeField] private List<BaseEntity> whitelist = new List<BaseEntity>();
+    [SerializeField] private List<BaseEntity> blacklist = new List<BaseEntity>();
 
-    [Header("Collision Behavior")]
-    [SerializeField] private HitBehavior enemyHitBehavior = HitBehavior.Stop;
-    [SerializeField] private HitBehavior wallHitBehavior = HitBehavior.Stop;
-    [SerializeField] private int maxPenetrations = 0;
-    [SerializeField] private float bounceDamping = 0.8f;
-    [SerializeField] private int maxBounces = 0;
+    [Header("Collision Actions")]
+    [SerializeField] private CollisionActionConfig[] enemyCollisionActions = new CollisionActionConfig[0];
+    [SerializeField] private CollisionActionConfig[] wallCollisionActions = new CollisionActionConfig[0];
 
     [Header("Lifetime Properties")]
     [SerializeField] private LifetimeType lifetimeType = LifetimeType.Time;
@@ -66,13 +63,33 @@ public class BulletPhysicsConfig : ScriptableObject
     [SerializeField] private float knockbackForce = 5f;
 
     [Header("Performance Properties")]
-    [SerializeField] private bool enableUpdate = true;              // Update 호출 여부
-    [SerializeField] private bool enableFixedUpdate = false;        // FixedUpdate 호출 여부
-    [SerializeField] private bool enableCollisionOptimization = true; // 충돌 최적화 여부
-    [SerializeField] private bool poolingEnabled = true;            // 풀링 사용 여부
-    [SerializeField] private int poolPreloadCount = 10;             // 미리 로드할 개수
+    [SerializeField] private bool enableUpdate = true;
+    [SerializeField] private bool enableFixedUpdate = false;
+    [SerializeField] private bool enableCollisionOptimization = true;
+    [SerializeField] private bool poolingEnabled = true;
+    [SerializeField] private int poolPreloadCount = 10;
 
-    // 프로퍼티들 (읽기 전용 접근)
+    // CollisionActionConfig 구조체 정의
+    [System.Serializable]
+    public class CollisionActionConfig
+    {
+        [Header("Action Settings")]
+        public CollisionActionType actionType = CollisionActionType.Stop;
+        
+        [Header("SpawnEntity Settings")]
+        public GameObject entityPrefab;
+        public int spawnCount = 1;
+        public Vector2 spawnOffset = Vector2.zero;
+        
+        [Header("Bounce Settings")]
+        [Range(0f, 1f)]
+        public float dampingFactor = 0.8f;
+        
+        [Header("Execution Limits")]
+        public int maxExecutions = 999; // 최대 실행 횟수
+    }
+
+    // 기존 프로퍼티들 (읽기 전용 접근)
     public string BulletName => bulletName;
     public string Description => description;
     
@@ -111,12 +128,9 @@ public class BulletPhysicsConfig : ScriptableObject
     public List<BaseEntity> Whitelist => whitelist;
     public List<BaseEntity> Blacklist => blacklist;
     
-    // Collision Behavior
-    public HitBehavior EnemyHitBehavior => enemyHitBehavior;
-    public HitBehavior WallHitBehavior => wallHitBehavior;
-    public int MaxPenetrations => maxPenetrations;
-    public float BounceDamping => bounceDamping;
-    public int MaxBounces => maxBounces;
+    // 새로운 Collision Actions 프로퍼티
+    public CollisionActionConfig[] EnemyCollisionActions => enemyCollisionActions;
+    public CollisionActionConfig[] WallCollisionActions => wallCollisionActions;
     
     // Lifetime Properties
     public LifetimeType LifetimeType => lifetimeType;
@@ -138,7 +152,7 @@ public class BulletPhysicsConfig : ScriptableObject
     public bool PoolingEnabled => poolingEnabled;
     public int PoolPreloadCount => poolPreloadCount;
 
-    // 검증 메서드들
+    // 검증 메서드들 (기존과 동일, maxBounces/maxPenetrations 관련 제거)
     private void OnValidate()
     {
         // 속도 값 검증
@@ -149,11 +163,6 @@ public class BulletPhysicsConfig : ScriptableObject
         // 물리 값 검증
         mass = Mathf.Max(0.01f, mass);
         drag = Mathf.Max(0f, drag);
-        
-        // 충돌 값 검증
-        maxPenetrations = Mathf.Max(0, maxPenetrations);
-        maxBounces = Mathf.Max(0, maxBounces);
-        bounceDamping = Mathf.Clamp01(bounceDamping);
         
         // 생명시간 값 검증
         maxLifetime = Mathf.Max(0.1f, maxLifetime);
@@ -174,5 +183,23 @@ public class BulletPhysicsConfig : ScriptableObject
         sineFrequency = Mathf.Max(0.1f, sineFrequency);
         spiralRadius = Mathf.Max(0.1f, spiralRadius);
         curveHeight = Mathf.Max(0f, curveHeight);
+        
+        // CollisionAction 검증
+        ValidateCollisionActions();
+    }
+    
+    private void ValidateCollisionActions()
+    {
+        foreach (var action in enemyCollisionActions)
+        {
+            if (action.actionType == CollisionActionType.SpawnEntity && action.entityPrefab == null)
+                Debug.LogWarning($"Enemy CollisionAction '{action.actionType}' requires entityPrefab");
+        }
+        
+        foreach (var action in wallCollisionActions)
+        {
+            if (action.actionType == CollisionActionType.SpawnEntity && action.entityPrefab == null)
+                Debug.LogWarning($"Wall CollisionAction '{action.actionType}' requires entityPrefab");
+        }
     }
 }
