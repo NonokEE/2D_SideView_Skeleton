@@ -1,3 +1,4 @@
+// Assets/01_Scripts/Combat/BulletPhysicsEnums.cs
 using UnityEngine;
 
 namespace Combat.Projectiles
@@ -47,5 +48,13 @@ namespace Combat.Projectiles
     {
         Vertical,       // 세로 방향
         Horizontal      // 가로 방향
+    }
+
+    [System.Serializable]
+    public enum CollisionResult
+    {
+        Continue,       // 계속 진행
+        Stop,           // 탄환 정지
+        Destroy         // 탄환 파괴
     }
 }
