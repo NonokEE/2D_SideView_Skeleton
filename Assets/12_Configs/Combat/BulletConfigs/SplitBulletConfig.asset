@@ -66,7 +66,7 @@ MonoBehaviour:
   blacklist: []
   enemyCollisionActions:
   - actionType: 4
-    entityPrefab: {fileID: 0}
+    entityPrefab: {fileID: 7215269994794008727, guid: c3b9e7c685587ab44b3fe54692f2e23b, type: 3}
     spawnCount: 0
     spawnOffset: {x: 0, y: 0}
     dampingFactor: 0
@@ -79,7 +79,7 @@ MonoBehaviour:
     maxExecutions: 1
   wallCollisionActions:
   - actionType: 4
-    entityPrefab: {fileID: 0}
+    entityPrefab: {fileID: 7215269994794008727, guid: c3b9e7c685587ab44b3fe54692f2e23b, type: 3}
     spawnCount: 3
     spawnOffset: {x: 0, y: 0}
     dampingFactor: 0

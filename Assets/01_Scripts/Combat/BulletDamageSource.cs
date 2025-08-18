@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Combat.Projectiles;
 
-public class Bullet : DamageSourceEntity
+public class BulletDamageSource : DamageSourceEntity
 {
-    [Header("Bullet Configuration")]
+    [Header("BulletDamageSource Configuration")]
     [SerializeField] private BulletPhysicsConfig bulletConfig;
     
     // Movement 전략만 유지 (충돌은 CollisionAction으로 처리)

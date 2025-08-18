@@ -101,8 +101,8 @@ public class MachineGunWeapon : BaseWeapon
                 // 탄환 생성 (임시: Instantiate 사용)
                 GameObject bulletObj = Instantiate(bulletPrefab, firePosition, Quaternion.identity);
                 
-                // 새로운 Bullet 클래스 초기화
-                Bullet bulletComponent = bulletObj.GetComponent<Bullet>();
+                // 새로운 BulletDamageSource 클래스 초기화
+                BulletDamageSource bulletComponent = bulletObj.GetComponent<BulletDamageSource>();
                 if (bulletComponent != null)
                 {
                     // ✅ BulletPhysicsConfig와 함께 초기화

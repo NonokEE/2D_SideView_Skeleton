@@ -56,5 +56,8 @@ TagManager:
   - name: DamageSource
     uniqueID: 2497514701
     locked: 0
+  - name: Effects
+    uniqueID: 3845821379
+    locked: 0
   m_RenderingLayers:
   - Default

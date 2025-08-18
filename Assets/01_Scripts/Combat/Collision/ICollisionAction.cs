@@ -8,7 +8,7 @@ public interface ICollisionAction
 
 public struct CollisionContext
 {
-    public Bullet bullet;
+    public BulletDamageSource bullet;
     public Collider2D collider;
     public BaseEntity targetEntity; // null if obstacle
     public LayerMask layerMask;
