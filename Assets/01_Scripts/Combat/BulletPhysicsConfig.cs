@@ -35,9 +35,9 @@ public class BulletPhysicsConfig : ScriptableObject
     [SerializeField] private float drag = 0f;
 
     [Header("Collider Properties")]
-    [SerializeField] private Vector2 colliderSize = new Vector2(0.2f, 0.2f);
+    [SerializeField] private Vector2 colliderSize = new Vector2(1.0f, 1.0f);
     [SerializeField] private Vector2 colliderOffset = Vector2.zero;
-    [SerializeField] private BulletCapsuleDirection colliderDirection = BulletCapsuleDirection.Vertical;
+    [SerializeField] private BulletCapsuleDirection colliderDirection = BulletCapsuleDirection.Horizontal;
 
     [Header("Target Selection")]
     [SerializeField] private LayerMask targetLayers = -1;

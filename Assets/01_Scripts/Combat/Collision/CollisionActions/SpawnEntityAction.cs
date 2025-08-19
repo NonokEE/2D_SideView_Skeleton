@@ -23,32 +23,45 @@ public class SpawnEntityAction : ICollisionAction
             return CollisionActionResult.Default;
         }
         
-        // Entity 생성 (자탄, 폭발, 독구름 등)
         for (int i = 0; i < spawnCount; i++)
         {
-            Vector3 spawnPos = context.hitPoint;
+            Vector3 spawnPos = context.hitPoint + (Vector3)spawnOffset;
             
             // 여러 개 생성 시 위치 분산
             if (spawnCount > 1)
             {
                 float angle = (360f / spawnCount) * i * Mathf.Deg2Rad;
-                Vector2 scatter = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * 0.5f;
+                Vector2 scatter = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * 0.3f;
                 spawnPos += (Vector3)scatter;
             }
             
-            spawnPos += (Vector3)spawnOffset;
-            
             GameObject spawned = Object.Instantiate(entityPrefab, spawnPos, Quaternion.identity);
             
-            // 소유자 정보 전달
-            if (spawned.TryGetComponent<DamageSourceEntity>(out var damageSource))
+            // ✅ BulletDamageSource 초기화 (SubBullet용)
+            if (spawned.TryGetComponent<BulletDamageSource>(out var bullet))
+            {
+                // SubBullet용 Config 로딩
+                BulletPhysicsConfig subBulletConfig = Resources.Load<BulletPhysicsConfig>("12_Configs/Combat/BulletConfigs/SubBulletConfig");
+                
+                if (subBulletConfig != null)
+                {
+                    bullet.Initialize(context.bullet.GetOwner(), context.bullet.GetWeapon(), subBulletConfig);
+                    
+                    // 자탄은 무작위 방향으로 발사
+                    float randomAngle = Random.Range(-60f, 60f) + (i * (120f / spawnCount));
+                    Vector2 randomDirection = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad));
+                    
+                    bullet.SetDirection(randomDirection);
+                }
+            }
+            // ✅ 기타 DamageSourceEntity 초기화
+            else if (spawned.TryGetComponent<DamageSourceEntity>(out var damageSource))
             {
                 damageSource.Initialize(context.bullet.GetOwner(), context.bullet.GetWeapon());
             }
         }
         
         Debug.Log($"SpawnEntityAction: Created {spawnCount} entities at {context.hitPoint}");
-        
-        return CollisionActionResult.Default; // 기본값 반환 (다른 액션에서 탄환 상태 결정)
+        return CollisionActionResult.Default;
     }
 }

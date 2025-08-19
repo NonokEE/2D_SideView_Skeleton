@@ -339,8 +339,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e0bc48f87173054c9dc35d820d5393b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visualContainer: {fileID: 0}
-  physicsContainer: {fileID: 0}
+  visualContainer: {fileID: 3008508023442262156}
+  physicsContainer: {fileID: 4403329523520690211}
   entityID: Explosion
   maxHealth: 1
   currentHealth: 0

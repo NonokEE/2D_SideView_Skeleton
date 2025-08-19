@@ -89,7 +89,7 @@ MonoBehaviour:
   maxDistance: 10
   maxHits: 1
   deathEffect: 0
-  damage: 15
+  damage: 20
   criticalChance: 0
   criticalMultiplier: 2
   knockbackForce: 5

@@ -182,7 +182,7 @@ MonoBehaviour:
   hitInvincibilityDuration: 0.3
   owner: {fileID: 0}
   weapon: {fileID: 0}
-  damage: 10
+  damage: 15
   targetLayers:
     serializedVersion: 2
     m_Bits: 196608
