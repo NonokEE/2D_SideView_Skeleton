@@ -35,6 +35,7 @@ public class ExplosionDamageSource : DamageSourceEntity
     
     private IEnumerator ExplodeCoroutine()
     {
+        yield return null;
         hasExploded = true;
         
         // ✅ VisualContainer에게 애니메이션 위임

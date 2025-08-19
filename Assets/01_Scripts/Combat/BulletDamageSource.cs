@@ -120,31 +120,37 @@ public class BulletDamageSource : DamageSourceEntity
         
         // 전략 초기화
         movementStrategy?.Initialize(entityRigidbody, bulletConfig, moveDirection);
-        lifetimeStrategy?.Initialize(bulletConfig, DestroyBullet);
         
-        // 업데이트 시작 (필요한 경우에만)
-        if (ShouldRunUpdate())
+        // ✅ 생명주기는 항상 독립 실행
+        StartLifetimeSystem();
+        
+        // Movement Update는 필요한 경우에만
+        if (ShouldRunMovementUpdate())
         {
-            updateCoroutine = StartCoroutine(UpdateCoroutine());
+            updateCoroutine = StartCoroutine(MovementUpdateCoroutine());
         }
     }
-    
-    private bool ShouldRunUpdate()
+
+    private void StartLifetimeSystem()
     {
-        return bulletConfig.EnableUpdate && 
-               (movementStrategy?.RequiresUpdate == true || 
-                bulletConfig.LifetimeType != LifetimeType.Infinite);
+        if (lifetimeStrategy != null && bulletConfig.LifetimeType != LifetimeType.Infinite)
+        {
+            lifetimeStrategy.Initialize(bulletConfig, DestroyBullet);
+            StartCoroutine(LifetimeUpdateCoroutine());
+        }
     }
-    
-    private IEnumerator UpdateCoroutine()
+
+    private bool ShouldRunMovementUpdate()
+    {
+        return bulletConfig.EnableUpdate && movementStrategy?.RequiresUpdate == true;
+    }
+
+    // 생명주기 전용 코루틴
+    private IEnumerator LifetimeUpdateCoroutine()
     {
         while (gameObject.activeInHierarchy && isInitialized)
         {
             float deltaTime = Time.deltaTime;
-            moveTimer += deltaTime;
-            
-            // 이동 업데이트
-            movementStrategy?.UpdateMovement(deltaTime, moveTimer);
             
             // 거리 계산
             Vector2 currentPosition = transform.position;
@@ -153,6 +159,21 @@ public class BulletDamageSource : DamageSourceEntity
             
             // 생명주기 업데이트
             lifetimeStrategy?.UpdateLifetime(deltaTime, traveledDistance, hitCount);
+            
+            yield return null;
+        }
+    }
+
+    // Movement 전용 코루틴 (기존 UpdateCoroutine에서 분리)
+    private IEnumerator MovementUpdateCoroutine()
+    {
+        while (gameObject.activeInHierarchy && isInitialized)
+        {
+            float deltaTime = Time.deltaTime;
+            moveTimer += deltaTime;
+            
+            // 이동 업데이트만
+            movementStrategy?.UpdateMovement(deltaTime, moveTimer);
             
             yield return null;
         }
@@ -222,29 +243,31 @@ public class BulletDamageSource : DamageSourceEntity
         Vector2 finalDirection = moveDirection;
         float finalSpeedMultiplier = 1f;
         
-        // CollisionAction 생성 및 실행
         var actions = CreateCollisionActions(configs);
-        
-        // Priority 순으로 정렬하여 실행
         actions.Sort((a, b) => a.Priority.CompareTo(b.Priority));
         
-        foreach (var action in actions)
+        // ✅ 실행과 동시에 카운트 증가
+        for (int i = 0; i < actions.Count; i++)
         {
+            var action = actions[i];
+            var config = configs[i];
+            
+            // 액션 실행
             var result = action.Execute(context);
             
-            // 결과 조합 (AND/OR 로직)
+            // ✅ 실행 후 카운트 증가
+            actionCounts[config.actionType]++;
+            
+            // 결과 조합
             shouldContinue &= result.continueBullet;
             shouldDestroy |= result.destroyBullet;
             
-            // 방향 변경 (마지막 변경사항 적용)
             if (result.newDirection != Vector2.zero)
                 finalDirection = result.newDirection;
                 
-            // 속도 배율 누적
             finalSpeedMultiplier *= result.speedMultiplier;
         }
         
-        // 최종 결과 적용
         ApplyCollisionResult(shouldContinue, shouldDestroy, finalDirection, finalSpeedMultiplier);
     }
     
@@ -287,14 +310,16 @@ public class BulletDamageSource : DamageSourceEntity
         
         foreach (var config in configs)
         {
-            // 최대 실행 횟수 체크
+            // ✅ 실행 전에 카운트 체크 (실행 후 증가로 변경)
             if (!actionCounts.ContainsKey(config.actionType))
                 actionCounts[config.actionType] = 0;
                 
+            // 최대 실행 횟수에 도달했으면 스킵
             if (actionCounts[config.actionType] >= config.maxExecutions)
+            {
+                Debug.Log($"Action {config.actionType} reached max executions ({config.maxExecutions})");
                 continue;
-                
-            actionCounts[config.actionType]++;
+            }
             
             // Action 생성
             ICollisionAction action = config.actionType switch

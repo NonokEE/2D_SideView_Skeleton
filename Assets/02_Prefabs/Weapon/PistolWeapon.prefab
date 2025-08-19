@@ -48,4 +48,4 @@ MonoBehaviour:
   damage: 10
   fireRate: 5
   bulletPrefab: {fileID: 2546327245160202656, guid: 3c64766d6c89b534a9cc5bebe3970f53, type: 3}
-  bulletConfig: {fileID: 11400000, guid: 6faec247d95313d4fa3d9a9d1208a597, type: 2}
+  bulletConfig: {fileID: 11400000, guid: 89f0d461171b8374287fd73e4ba92dbe, type: 2}

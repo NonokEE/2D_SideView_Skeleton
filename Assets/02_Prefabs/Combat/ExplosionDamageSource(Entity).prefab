@@ -130,7 +130,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4059190764484694411}
@@ -222,7 +222,7 @@ MonoBehaviour:
   playOnStart: 0
   loop: 0
   stretchScale: {x: 15, y: 15}
-  stretchDuration: 1.15
+  stretchDuration: 1
   stretchCurve:
     serializedVersion: 2
     m_Curve:
@@ -292,8 +292,8 @@ Transform:
   m_GameObject: {fileID: 8953006964748552390}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.9379821, y: -1.0336004, z: -0.11658392}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 1.9379821, y: -1.0336004, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5315594246643721196}
@@ -353,5 +353,5 @@ MonoBehaviour:
     m_Bits: 196608
   whitelist: []
   blacklist: []
-  explosionRadius: 1.5
+  explosionRadius: 15
   explosionDuration: 0.3

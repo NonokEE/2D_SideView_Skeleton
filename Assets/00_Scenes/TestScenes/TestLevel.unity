@@ -3575,7 +3575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4251326452225502877, guid: 9134d02f676344342869ebb905af0c57, type: 3}
       propertyPath: m_Name
-      value: DummyEmemy (1)
+      value: DummyEmemy 2
       objectReference: {fileID: 0}
     - target: {fileID: 6758270035497270380, guid: 9134d02f676344342869ebb905af0c57, type: 3}
       propertyPath: showDebugLogs
@@ -3640,7 +3640,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4251326452225502877, guid: 9134d02f676344342869ebb905af0c57, type: 3}
       propertyPath: m_Name
-      value: DummyEmemy (2)
+      value: DummyEmemy 3
       objectReference: {fileID: 0}
     - target: {fileID: 6758270035497270380, guid: 9134d02f676344342869ebb905af0c57, type: 3}
       propertyPath: showDebugLogs
@@ -4068,7 +4068,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4251326452225502877, guid: 9134d02f676344342869ebb905af0c57, type: 3}
       propertyPath: m_Name
-      value: DummyEmemy
+      value: DummyEmemy 1
       objectReference: {fileID: 0}
     - target: {fileID: 6758270035497270380, guid: 9134d02f676344342869ebb905af0c57, type: 3}
       propertyPath: showDebugLogs

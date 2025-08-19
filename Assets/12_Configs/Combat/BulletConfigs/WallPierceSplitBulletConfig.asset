@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d9f8ccfd5a99a4cbdf2801bd5f8d34, type: 3}
   m_Name: WallPierceSplitBulletConfig
   m_EditorClassIdentifier: 
-  bulletName: New Bullet
+  bulletName: WallPierceSplitBulletConfig
   description: Bullet description...
   movementType: 0
   initialSpeed: 10
@@ -53,19 +53,37 @@ MonoBehaviour:
   gravityScale: 1
   mass: 0.1
   drag: 0
-  colliderSize: {x: 0.2, y: 0.2}
+  colliderSize: {x: 1, y: 1}
   colliderOffset: {x: 0, y: 0}
-  colliderDirection: 0
+  colliderDirection: 1
   targetLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 131072
   obstacleLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   whitelist: []
   blacklist: []
-  enemyCollisionActions: []
-  wallCollisionActions: []
+  enemyCollisionActions:
+  - actionType: 3
+    entityPrefab: {fileID: 0}
+    spawnCount: 0
+    spawnOffset: {x: 0, y: 0}
+    dampingFactor: 0
+    maxExecutions: 1
+  wallCollisionActions:
+  - actionType: 0
+    entityPrefab: {fileID: 0}
+    spawnCount: 0
+    spawnOffset: {x: 0, y: 0}
+    dampingFactor: 0
+    maxExecutions: 3
+  - actionType: 4
+    entityPrefab: {fileID: 7215269994794008727, guid: c3b9e7c685587ab44b3fe54692f2e23b, type: 3}
+    spawnCount: 3
+    spawnOffset: {x: 0, y: 0}
+    dampingFactor: 0
+    maxExecutions: 3
   lifetimeType: 0
   maxLifetime: 3
   maxDistance: 10
@@ -75,7 +93,7 @@ MonoBehaviour:
   criticalChance: 0
   criticalMultiplier: 2
   knockbackForce: 5
-  enableUpdate: 1
+  enableUpdate: 0
   enableFixedUpdate: 0
   enableCollisionOptimization: 1
   poolingEnabled: 1

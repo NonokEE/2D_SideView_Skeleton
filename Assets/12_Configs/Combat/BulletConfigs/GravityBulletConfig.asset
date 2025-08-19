@@ -50,10 +50,10 @@ MonoBehaviour:
   homingStrength: 0
   homingRange: 5
   useGravity: 1
-  gravityScale: 2
+  gravityScale: 1
   mass: 0.2
   drag: 0
-  colliderSize: {x: 0.15, y: 0.05}
+  colliderSize: {x: 1, y: 1}
   colliderOffset: {x: 0, y: 0}
   colliderDirection: 1
   targetLayers:

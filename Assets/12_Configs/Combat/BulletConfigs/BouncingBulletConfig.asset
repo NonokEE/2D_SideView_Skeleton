@@ -53,7 +53,7 @@ MonoBehaviour:
   gravityScale: 1
   mass: 0.1
   drag: 0
-  colliderSize: {x: 0.15, y: 0.05}
+  colliderSize: {x: 1, y: 1}
   colliderOffset: {x: 0, y: 0}
   colliderDirection: 1
   targetLayers:
@@ -70,7 +70,7 @@ MonoBehaviour:
     spawnCount: 0
     spawnOffset: {x: 0, y: 0}
     dampingFactor: 0
-    maxExecutions: 0
+    maxExecutions: 1
   wallCollisionActions:
   - actionType: 1
     entityPrefab: {fileID: 0}
@@ -82,8 +82,8 @@ MonoBehaviour:
     entityPrefab: {fileID: 0}
     spawnCount: 0
     spawnOffset: {x: 0, y: 0}
-    dampingFactor: 0
-    maxExecutions: 1
+    dampingFactor: 0.8
+    maxExecutions: 0
   lifetimeType: 0
   maxLifetime: 8
   maxDistance: 10

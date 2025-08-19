@@ -53,7 +53,7 @@ MonoBehaviour:
   gravityScale: 1
   mass: 0.1
   drag: 0
-  colliderSize: {x: 0.15, y: 0.05}
+  colliderSize: {x: 1, y: 1}
   colliderOffset: {x: 0, y: 0}
   colliderDirection: 1
   targetLayers:
@@ -83,7 +83,7 @@ MonoBehaviour:
     spawnCount: 0
     spawnOffset: {x: 0, y: 0}
     dampingFactor: 0
-    maxExecutions: 0
+    maxExecutions: 1
   lifetimeType: 0
   maxLifetime: 3
   maxDistance: 10

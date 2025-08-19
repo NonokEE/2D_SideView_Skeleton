@@ -14,12 +14,16 @@ public class TimeLifetimeStrategy : ILifetimeStrategy
         maxLifetime = config.MaxLifetime;
         currentLifetime = 0f;
         onLifetimeEnd = onEnd;
+        Debug.Log($"TimeLifetime initialized: {maxLifetime}s");
     }
 
     public void UpdateLifetime(float deltaTime, float traveledDistance, int hitCount)
     {
         currentLifetime += deltaTime;
-        if (ShouldDestroy)
-            onLifetimeEnd?.Invoke();
+        if (ShouldDestroy && onLifetimeEnd != null)
+        {
+            Debug.Log($"Lifetime expired: {currentLifetime}/{maxLifetime}");
+            onLifetimeEnd.Invoke();
+        }
     }
 }

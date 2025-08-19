@@ -15,17 +15,17 @@ MonoBehaviour:
   bulletName: Standard Pistol Bullet
   description: Basic straight projectile
   movementType: 0
-  initialSpeed: 15
-  maxSpeed: 15
-  accelerationTime: 0.5
+  initialSpeed: 5
+  maxSpeed: 10
+  accelerationTime: 5
   speedCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
@@ -33,8 +33,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 1
+      outSlope: 1
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
   gravityScale: 1
   mass: 0.1
   drag: 0
-  colliderSize: {x: 0.15, y: 0.05}
+  colliderSize: {x: 1, y: 1}
   colliderOffset: {x: 0, y: 0}
   colliderDirection: 1
   targetLayers:
@@ -79,8 +79,8 @@ MonoBehaviour:
     dampingFactor: 0
     maxExecutions: 1
   lifetimeType: 0
-  maxLifetime: 3
-  maxDistance: 10
+  maxLifetime: 1
+  maxDistance: 5
   maxHits: 1
   deathEffect: 0
   damage: 20
