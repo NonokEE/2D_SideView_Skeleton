@@ -290,4 +290,4 @@ MonoBehaviour:
     m_Bits: 196608
   whitelist: []
   blacklist: []
-  bulletConfig: {fileID: 0}
+  bulletConfig: {fileID: 11400000, guid: 2df7fe9fdbd8a3d4095bc53fe95f27b3, type: 2}
