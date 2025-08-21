@@ -83,7 +83,7 @@ MonoBehaviour:
     spawnCount: 0
     spawnOffset: {x: 0, y: 0}
     dampingFactor: 0.8
-    maxExecutions: 0
+    maxExecutions: 1
   lifetimeType: 0
   maxLifetime: 8
   maxDistance: 10

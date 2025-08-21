@@ -1,4 +1,3 @@
-// Assets/01_Scripts/Combat/ExplosionDamageSource.cs
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,8 +5,12 @@ using System.Collections.Generic;
 public class ExplosionDamageSource : DamageSourceEntity
 {
     [Header("Explosion Settings")]
-    [SerializeField] private float explosionRadius = 1.5f;
+    [SerializeField] private Vector2 explosionSize = new Vector2(3f, 3f);
+    [SerializeField] private CapsuleDirection2D explosionDirection = CapsuleDirection2D.Horizontal; // 기본 가로 방향
     [SerializeField] private float explosionDuration = 0.3f;
+    
+    [Header("Debug Visualization")]
+    [SerializeField] private bool showExplosionGizmos = true;
     
     private bool hasExploded = false;
     private HashSet<BaseEntity> damagedEntities = new HashSet<BaseEntity>();
@@ -24,10 +27,14 @@ public class ExplosionDamageSource : DamageSourceEntity
     {
         base.Initialize(sourceOwner, sourceWeapon);
         
-        // 폭발 범위 설정
-        if (physicsContainer?.MainCollider is CircleCollider2D circleCollider)
+        if (physicsContainer?.MainCollider is CapsuleCollider2D capsuleCollider)
         {
-            circleCollider.radius = explosionRadius;
+            capsuleCollider.size = explosionSize;
+            capsuleCollider.direction = explosionDirection; // 기본 세로 방향
+        }
+        else
+        {
+            Debug.LogWarning($"{gameObject.name}: MainCollider is not CapsuleCollider2D!");
         }
         
         Initialize();
@@ -35,17 +42,16 @@ public class ExplosionDamageSource : DamageSourceEntity
     
     private IEnumerator ExplodeCoroutine()
     {
+        // ✅ 초기화 지연을 위한 한 프레임 대기
         yield return null;
+        
         hasExploded = true;
         
-        // ✅ VisualContainer에게 애니메이션 위임
         if (visualContainer != null)
         {
-            // ScaleStretch 애니메이션 (인덱스 0)
-            visualContainer.PlayGeometricAnimation(0);
-            
-            // ColorBlink 애니메이션 (인덱스 1) - 독립적으로 실행
-            visualContainer.PlayGeometricAnimation(1);
+            // 폭발 시각 효과
+            visualContainer.PlayGeometricAnimation(0); // ScaleStretch
+            visualContainer.PlayGeometricAnimation(1); // ColorBlink
         }
         
         // 폭발 지속시간 대기
@@ -71,9 +77,43 @@ public class ExplosionDamageSource : DamageSourceEntity
         }
     }
     
+    private void OnDrawGizmos()
+    {
+        if (!showExplosionGizmos) return;
+        
+        Vector3 worldPosition = transform.position;
+        
+        if (Application.isPlaying && hasExploded)
+        {
+            // 폭발 중일 때는 빨간색으로 실제 판정 영역 표시
+            Gizmos.color = new Color(1f, 0f, 0f, 0.7f);
+            Gizmos.DrawWireCube(worldPosition, explosionSize);
+            
+            // 내부 채우기 (반투명)
+            Gizmos.color = new Color(1f, 0f, 0f, 0.1f);
+            Gizmos.DrawCube(worldPosition, explosionSize);
+        }
+        else
+        {
+            // 폭발 전에는 주황색으로 예상 영역 표시
+            Gizmos.color = new Color(1f, 0.5f, 0f, 0.4f);
+            Gizmos.DrawWireCube(worldPosition, explosionSize);
+        }
+    }
+    
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+        if (!showExplosionGizmos) return;
+        
+        // 선택된 상태에서는 더 자세한 정보 표시
+        Vector3 worldPosition = transform.position;
+        
+        // 폭발 판정 영역 (파란색 테두리)
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(worldPosition, explosionSize);
+        
+        // 판정 영역 라벨 표시를 위한 추가 시각화
+        Gizmos.color = new Color(0f, 0f, 1f, 0.1f);
+        Gizmos.DrawCube(worldPosition, explosionSize);
     }
 }
