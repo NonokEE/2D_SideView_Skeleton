@@ -4,16 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using Combat.Projectiles;
 
+/// <summary>
+/// 범용 탄환 시스템. BulletPhysicsConfig를 통해 다양한 탄환 효과 구현 가능.
+/// Movement, Lifetime, CollisionAction을 조합하여 복잡한 탄환 동작 지원.
+/// </summary>
 public class BulletDamageSource : DamageSourceEntity
 {
-    [Header("BulletDamageSource Configuration")]
+    [Header("Bullet Configuration")]
     [SerializeField] private BulletPhysicsConfig bulletConfig;
     
-    // Movement 전략만 유지 (충돌은 CollisionAction으로 처리)
+    #region Private Fields
+    
+    // Movement 전략 (충돌은 CollisionAction으로 처리)
     private IMovementStrategy movementStrategy;
     private ILifetimeStrategy lifetimeStrategy;
     
-    // 런타임 상태 변수들
+    // 런타임 상태
     private Vector2 moveDirection = Vector2.right;
     private float currentSpeed;
     private float traveledDistance;
@@ -22,11 +28,16 @@ public class BulletDamageSource : DamageSourceEntity
     private float moveTimer;
     private Vector2 lastPosition;
     
-    // CollisionAction 실행 카운터
+    // CollisionAction 실행 관리
     private Dictionary<CollisionActionType, int> actionCounts = new();
     
     // 생명주기 관리
-    private Coroutine updateCoroutine;
+    private Coroutine lifetimeCoroutine;
+    private Coroutine movementCoroutine;
+    
+    #endregion
+    
+    #region Initialization
     
     public override void Initialize()
     {
@@ -45,30 +56,35 @@ public class BulletDamageSource : DamageSourceEntity
     
     private void InitializeFromConfig()
     {
-        if (bulletConfig == null) return;
+        if (bulletConfig == null)
+        {
+            Debug.LogError($"{gameObject.name}: BulletPhysicsConfig is null!");
+            return;
+        }
         
         // 기본 설정
         damage = Mathf.RoundToInt(bulletConfig.Damage);
         currentSpeed = bulletConfig.InitialSpeed;
         SetTargetLayers(bulletConfig.TargetLayers);
         
-        // Whitelist/Blacklist 복사
+        // 피아식별 설정
+        CopyWhitelistBlacklist();
+        
+        // 시스템 초기화
+        CreateStrategies();
+        SetupPhysics();
+        SetupCollider();
+        ResetState();
+        
+        isInitialized = true;
+    }
+    
+    private void CopyWhitelistBlacklist()
+    {
         foreach (var entity in bulletConfig.Whitelist)
             AddToWhitelist(entity);
         foreach (var entity in bulletConfig.Blacklist)
             AddToBlacklist(entity);
-        
-        // 전략 객체들 생성 (Movement와 Lifetime만)
-        CreateStrategies();
-        
-        // 물리 설정
-        SetupPhysics();
-        SetupCollider();
-        
-        // 상태 초기화
-        ResetState();
-        
-        isInitialized = true;
     }
     
     private void CreateStrategies()
@@ -108,44 +124,58 @@ public class BulletDamageSource : DamageSourceEntity
         actionCounts.Clear();
     }
     
+    #endregion
+    
+    #region Movement & Lifecycle
+    
     public virtual void SetDirection(Vector2 direction)
     {
         if (!isInitialized) return;
         
         moveDirection = direction.normalized;
+        UpdateRotation();
         
-        // 탄환 회전 설정
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // 시스템 시작
+        InitializeStrategies();
+        StartLifecycleSystem();
+        StartMovementSystem();
+    }
+    
+    private void UpdateRotation()
+    {
+        float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        
-        // 전략 초기화
+    }
+    
+    private void InitializeStrategies()
+    {
         movementStrategy?.Initialize(entityRigidbody, bulletConfig, moveDirection);
-        
-        // ✅ 생명주기는 항상 독립 실행
-        StartLifetimeSystem();
-        
+        lifetimeStrategy?.Initialize(bulletConfig, DestroyBullet);
+    }
+    
+    private void StartLifecycleSystem()
+    {
+        // 생명주기는 항상 독립 실행 (Enable Update와 무관)
+        if (bulletConfig.LifetimeType != LifetimeType.Infinite)
+        {
+            lifetimeCoroutine = StartCoroutine(LifetimeUpdateCoroutine());
+        }
+    }
+    
+    private void StartMovementSystem()
+    {
         // Movement Update는 필요한 경우에만
         if (ShouldRunMovementUpdate())
         {
-            updateCoroutine = StartCoroutine(MovementUpdateCoroutine());
+            movementCoroutine = StartCoroutine(MovementUpdateCoroutine());
         }
     }
-
-    private void StartLifetimeSystem()
-    {
-        if (lifetimeStrategy != null && bulletConfig.LifetimeType != LifetimeType.Infinite)
-        {
-            lifetimeStrategy.Initialize(bulletConfig, DestroyBullet);
-            StartCoroutine(LifetimeUpdateCoroutine());
-        }
-    }
-
+    
     private bool ShouldRunMovementUpdate()
     {
         return bulletConfig.EnableUpdate && movementStrategy?.RequiresUpdate == true;
     }
-
-    // 생명주기 전용 코루틴
+    
     private IEnumerator LifetimeUpdateCoroutine()
     {
         while (gameObject.activeInHierarchy && isInitialized)
@@ -163,8 +193,7 @@ public class BulletDamageSource : DamageSourceEntity
             yield return null;
         }
     }
-
-    // Movement 전용 코루틴 (기존 UpdateCoroutine에서 분리)
+    
     private IEnumerator MovementUpdateCoroutine()
     {
         while (gameObject.activeInHierarchy && isInitialized)
@@ -172,27 +201,33 @@ public class BulletDamageSource : DamageSourceEntity
             float deltaTime = Time.deltaTime;
             moveTimer += deltaTime;
             
-            // 이동 업데이트만
+            // 이동 업데이트
             movementStrategy?.UpdateMovement(deltaTime, moveTimer);
             
             yield return null;
         }
     }
     
+    #endregion
+    
+    #region Collision Handling
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // 장애물 충돌 체크
-        if ((bulletConfig.ObstacleLayers.value & (1 << other.gameObject.layer)) != 0)
+        // 장애물 vs Entity 분류
+        bool isObstacle = (bulletConfig.ObstacleLayers.value & (1 << other.gameObject.layer)) != 0;
+        
+        if (isObstacle)
         {
             HandleObstacleCollision(other);
-            return;
         }
-        
-        // Entity 충돌 처리
-        BaseEntity target = other.GetComponent<BaseEntity>();
-        if (target != null && CanDamage(target))
+        else
         {
-            HandleEntityCollision(target);
+            BaseEntity target = other.GetComponent<BaseEntity>();
+            if (target != null && CanDamage(target))
+            {
+                HandleEntityCollision(target);
+            }
         }
     }
     
@@ -201,11 +236,20 @@ public class BulletDamageSource : DamageSourceEntity
         // 피해 적용
         DamageData damageData = GenerateDamageData(target);
         target.TakeDamage(damageData);
-        
         hitCount++;
         
-        // 충돌 컨텍스트 생성
-        CollisionContext context = new CollisionContext
+        // CollisionAction 실행
+        ExecuteCollisionActions(bulletConfig.EnemyCollisionActions, CreateCollisionContext(target));
+    }
+    
+    private void HandleObstacleCollision(Collider2D obstacle)
+    {
+        ExecuteCollisionActions(bulletConfig.WallCollisionActions, CreateCollisionContext(obstacle));
+    }
+    
+    private CollisionContext CreateCollisionContext(BaseEntity target)
+    {
+        return new CollisionContext
         {
             bullet = this,
             collider = target.GetComponent<Collider2D>(),
@@ -213,15 +257,11 @@ public class BulletDamageSource : DamageSourceEntity
             layerMask = bulletConfig.TargetLayers,
             hitPoint = transform.position
         };
-        
-        // Enemy CollisionAction 실행
-        ExecuteCollisionActions(bulletConfig.EnemyCollisionActions, context);
     }
     
-    private void HandleObstacleCollision(Collider2D obstacle)
+    private CollisionContext CreateCollisionContext(Collider2D obstacle)
     {
-        // 충돌 컨텍스트 생성
-        CollisionContext context = new CollisionContext
+        return new CollisionContext
         {
             bullet = this,
             collider = obstacle,
@@ -229,36 +269,90 @@ public class BulletDamageSource : DamageSourceEntity
             layerMask = bulletConfig.ObstacleLayers,
             hitPoint = transform.position
         };
-        
-        // Wall CollisionAction 실행
-        ExecuteCollisionActions(bulletConfig.WallCollisionActions, context);
     }
+    
+    #endregion
+    
+    #region CollisionAction System
     
     private void ExecuteCollisionActions(BulletPhysicsConfig.CollisionActionConfig[] configs, CollisionContext context)
     {
         if (configs == null || configs.Length == 0) return;
         
+        var actions = CreateCollisionActions(configs);
+        var results = ExecuteActionsInOrder(actions, context);
+        ApplyFinalResult(results);
+    }
+    
+    private List<ICollisionAction> CreateCollisionActions(BulletPhysicsConfig.CollisionActionConfig[] configs)
+    {
+        List<ICollisionAction> actions = new();
+        
+        foreach (var config in configs)
+        {
+            if (ShouldSkipAction(config)) continue;
+            
+            ICollisionAction action = CreateSingleAction(config);
+            if (action != null)
+            {
+                actions.Add(action);
+                IncrementActionCount(config.actionType);
+            }
+        }
+        
+        return actions.OrderBy(a => a.Priority).ToList();
+    }
+    
+    private bool ShouldSkipAction(BulletPhysicsConfig.CollisionActionConfig config)
+    {
+        if (!actionCounts.ContainsKey(config.actionType))
+            actionCounts[config.actionType] = 0;
+            
+        return actionCounts[config.actionType] >= config.maxExecutions;
+    }
+    
+    private ICollisionAction CreateSingleAction(BulletPhysicsConfig.CollisionActionConfig config)
+    {
+        return config.actionType switch
+        {
+            CollisionActionType.Penetrate => new PenetrateAction(),
+            CollisionActionType.Bounce => new BounceAction(config.dampingFactor),
+            CollisionActionType.Stop => new StopAction(),
+            CollisionActionType.Destroy => new DestroyAction(),
+            CollisionActionType.SpawnEntity => new SpawnEntityAction(config.entityPrefab, config.spawnCount, config.spawnOffset),
+            _ => null
+        };
+    }
+    
+    private void IncrementActionCount(CollisionActionType actionType)
+    {
+        actionCounts[actionType]++;
+    }
+    
+    private List<CollisionActionResult> ExecuteActionsInOrder(List<ICollisionAction> actions, CollisionContext context)
+    {
+        List<CollisionActionResult> results = new();
+        
+        foreach (var action in actions)
+        {
+            // ✅ 전달받은 context 사용
+            var result = action.Execute(context);
+            results.Add(result);
+        }
+        
+        return results;
+    }
+    
+    private void ApplyFinalResult(List<CollisionActionResult> results)
+    {
         bool shouldContinue = true;
         bool shouldDestroy = false;
         Vector2 finalDirection = moveDirection;
         float finalSpeedMultiplier = 1f;
         
-        var actions = CreateCollisionActions(configs);
-        actions.Sort((a, b) => a.Priority.CompareTo(b.Priority));
-        
-        // ✅ 실행과 동시에 카운트 증가
-        for (int i = 0; i < actions.Count; i++)
+        // 모든 결과 조합
+        foreach (var result in results)
         {
-            var action = actions[i];
-            var config = configs[i];
-            
-            // 액션 실행
-            var result = action.Execute(context);
-            
-            // ✅ 실행 후 카운트 증가
-            actionCounts[config.actionType]++;
-            
-            // 결과 조합
             shouldContinue &= result.continueBullet;
             shouldDestroy |= result.destroyBullet;
             
@@ -268,6 +362,7 @@ public class BulletDamageSource : DamageSourceEntity
             finalSpeedMultiplier *= result.speedMultiplier;
         }
         
+        // 최종 적용
         ApplyCollisionResult(shouldContinue, shouldDestroy, finalDirection, finalSpeedMultiplier);
     }
     
@@ -281,112 +376,98 @@ public class BulletDamageSource : DamageSourceEntity
         
         if (!shouldContinue)
         {
-            // 탄환 정지
-            if (entityRigidbody != null)
-                entityRigidbody.linearVelocity = Vector2.zero;
+            StopBullet();
             return;
         }
         
         // 방향/속도 업데이트
-        if (finalDirection != moveDirection)
+        UpdateMovementFromCollision(finalDirection, speedMultiplier);
+    }
+    
+    private void StopBullet()
+    {
+        if (entityRigidbody != null)
+            entityRigidbody.linearVelocity = Vector2.zero;
+    }
+    
+    private void UpdateMovementFromCollision(Vector2 newDirection, float speedMultiplier)
+    {
+        if (newDirection != moveDirection)
         {
-            moveDirection = finalDirection.normalized;
+            moveDirection = newDirection.normalized;
             UpdateRotation();
             movementStrategy?.SetDirection(moveDirection);
         }
         
-        // 속도 적용
         currentSpeed *= speedMultiplier;
+        UpdatePhysicsVelocity();
+    }
+    
+    private void UpdatePhysicsVelocity()
+    {
         if (entityRigidbody != null && movementStrategy?.RequiresUpdate != true)
         {
-            // MovementStrategy가 Update를 사용하지 않는 경우 직접 속도 적용
             entityRigidbody.linearVelocity = moveDirection * currentSpeed;
         }
     }
     
-    private List<ICollisionAction> CreateCollisionActions(BulletPhysicsConfig.CollisionActionConfig[] configs)
-    {
-        List<ICollisionAction> actions = new();
-        
-        foreach (var config in configs)
-        {
-            // ✅ 실행 전에 카운트 체크 (실행 후 증가로 변경)
-            if (!actionCounts.ContainsKey(config.actionType))
-                actionCounts[config.actionType] = 0;
-                
-            // 최대 실행 횟수에 도달했으면 스킵
-            if (actionCounts[config.actionType] >= config.maxExecutions)
-            {
-                Debug.Log($"Action {config.actionType} reached max executions ({config.maxExecutions})");
-                continue;
-            }
-            
-            // Action 생성
-            ICollisionAction action = config.actionType switch
-            {
-                CollisionActionType.Penetrate => new PenetrateAction(),
-                CollisionActionType.Bounce => new BounceAction(config.dampingFactor),
-                CollisionActionType.Stop => new StopAction(),
-                CollisionActionType.Destroy => new DestroyAction(),
-                CollisionActionType.SpawnEntity => new SpawnEntityAction(config.entityPrefab, config.spawnCount, config.spawnOffset),
-                _ => new StopAction()
-            };
-            
-            actions.Add(action);
-        }
-        
-        return actions;
-    }
+    #endregion
     
-    private void UpdateRotation()
-    {
-        float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-    }
+    #region Public Interface
     
-    // CollisionAction에서 호출할 수 있는 메서드들
+    /// <summary>
+    /// CollisionAction에서 사용할 수 있는 탄환 방향 정보
+    /// </summary>
     public Vector2 GetDirection() => moveDirection;
+    
+    /// <summary>
+    /// CollisionAction에서 사용할 수 있는 탄환 속도 정보
+    /// </summary>
     public float GetCurrentSpeed() => currentSpeed;
+    
+    /// <summary>
+    /// CollisionAction에서 탄환 속도 변경
+    /// </summary>
     public void SetSpeed(float newSpeed) => currentSpeed = newSpeed;
+    
+    #endregion
+    
+    #region Cleanup
     
     protected virtual void DestroyBullet()
     {
-        // 코루틴 정리
-        if (updateCoroutine != null)
-        {
-            StopCoroutine(updateCoroutine);
-            updateCoroutine = null;
-        }
-        
-        // Pool 반환 또는 파괴
+        StopAllCoroutines();
         gameObject.SetActive(false);
     }
     
     public virtual void ResetForPool()
     {
+        // Pool 사용을 위한 재설정
         isInitialized = false;
         bulletConfig = null;
         
-        // 전략 객체들 해제
+        // 전략 해제
         movementStrategy = null;
         lifetimeStrategy = null;
         
-        // 코루틴 정리
-        if (updateCoroutine != null)
-        {
-            StopCoroutine(updateCoroutine);
-            updateCoroutine = null;
-        }
-        
-        // 물리 리셋
+        // 상태 리셋
+        StopAllCoroutines();
+        ResetPhysics();
+        ResetState();
+        ClearTargetLists();
+    }
+    
+    private void ResetPhysics()
+    {
         if (entityRigidbody != null)
             entityRigidbody.linearVelocity = Vector2.zero;
-            
-        // 상태 리셋
-        ResetState();
-        
-        // Whitelist/Blacklist 초기화
+    }
+    
+    private void ClearTargetLists()
+    {
         whitelist.Clear();
         blacklist.Clear();
     }
+    
+    #endregion
 }

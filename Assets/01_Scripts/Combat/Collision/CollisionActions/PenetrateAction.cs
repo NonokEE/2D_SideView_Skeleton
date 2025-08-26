@@ -1,12 +1,33 @@
 using UnityEngine;
 
+/// <summary>
+/// 관통 CollisionAction. 탄환이 충돌 대상을 관통하여 계속 진행하도록 함.
+/// 주로 적 관통용으로 사용되며, maxExecutions로 관통 횟수 제한 가능.
+/// </summary>
 public class PenetrateAction : ICollisionAction
 {
-    public int Priority => 1; // 가장 먼저 실행 (관통 판정)
+    #region Constants
     
+    private const int PENETRATE_PRIORITY = 1; // 가장 높은 우선순위 (관통 판정 우선)
+    
+    #endregion
+    
+    #region ICollisionAction Implementation
+    
+    public int Priority => PENETRATE_PRIORITY;
+    
+    #endregion
+    
+    #region Action Execution
+    
+    /// <summary>
+    /// 관통 액션 실행. 탄환이 대상을 관통하여 계속 진행하도록 설정.
+    /// </summary>
+    /// <param name="context">충돌 컨텍스트</param>
+    /// <returns>탄환 계속 진행 결과</returns>
     public CollisionActionResult Execute(CollisionContext context)
     {
-        Debug.Log($"Bullet penetrated {context.collider.name}");
+        LogPenetration(context);
         
         return new CollisionActionResult
         {
@@ -16,4 +37,22 @@ public class PenetrateAction : ICollisionAction
             speedMultiplier = 1f        // 속도 변화 없음
         };
     }
+    
+    #endregion
+    
+    #region Logging
+    
+    /// <summary>
+    /// 관통 발생 로그 출력
+    /// </summary>
+    private void LogPenetration(CollisionContext context)
+    {
+        string targetName = context.IsEntityCollision 
+            ? context.targetEntity.entityID 
+            : context.collider.name;
+            
+        Debug.Log($"Bullet penetrated {targetName}");
+    }
+    
+    #endregion
 }
