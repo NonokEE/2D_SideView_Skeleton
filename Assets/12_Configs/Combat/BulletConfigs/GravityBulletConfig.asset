@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d9f8ccfd5a99a4cbdf2801bd5f8d34, type: 3}
+  m_Name: GravityBulletConfig
+  m_EditorClassIdentifier: 
+  bulletName: Gravity Bullet
+  description: Affected by gravity, arcs through air
+  movementType: 3
+  initialSpeed: 15
+  maxSpeed: 15
+  accelerationTime: 0.5
+  speedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  rotationSpeed: 0
+  sineAmplitude: 2
+  sineFrequency: 4
+  spiralRadius: 1
+  curveHeight: 2
+  homingStrength: 0
+  homingRange: 5
+  useGravity: 1
+  gravityScale: 1
+  mass: 0.2
+  drag: 0
+  colliderSize: {x: 1, y: 1}
+  colliderOffset: {x: 0, y: 0}
+  colliderDirection: 1
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 131072
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  whitelist: []
+  blacklist: []
+  enemyCollisionActions:
+  - actionType: 3
+    entityPrefab: {fileID: 0}
+    spawnCount: 0
+    spawnOffset: {x: 0, y: 0}
+    dampingFactor: 0
+    maxExecutions: 1
+  wallCollisionActions:
+  - actionType: 1
+    entityPrefab: {fileID: 0}
+    spawnCount: 0
+    spawnOffset: {x: 0, y: 0}
+    dampingFactor: 0.6
+    maxExecutions: 2
+  - actionType: 3
+    entityPrefab: {fileID: 0}
+    spawnCount: 0
+    spawnOffset: {x: 0, y: 0}
+    dampingFactor: 0
+    maxExecutions: 1
+  lifetimeType: 1
+  maxLifetime: 3
+  maxDistance: 20
+  maxHits: 1
+  deathEffect: 0
+  damage: 45
+  criticalChance: 0
+  criticalMultiplier: 2
+  knockbackForce: 5
+  enableUpdate: 1
+  enableFixedUpdate: 0
+  enableCollisionOptimization: 1
+  poolingEnabled: 1
+  poolPreloadCount: 10

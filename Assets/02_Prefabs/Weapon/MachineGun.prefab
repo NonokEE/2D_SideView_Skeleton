@@ -47,5 +47,6 @@ MonoBehaviour:
   weaponName: Machine Gun
   damage: 10
   fireRate: 2
-  bulletPrefab: {fileID: 8513593951664315477, guid: 5ff26d1345c5cfc458956ad73b7d2680, type: 3}
-  burstFireRate: 20
+  bulletPrefab: {fileID: 2546327245160202656, guid: 3c64766d6c89b534a9cc5bebe3970f53, type: 3}
+  bulletConfig: {fileID: 11400000, guid: 2df7fe9fdbd8a3d4095bc53fe95f27b3, type: 2}
+  burstFireRate: 30

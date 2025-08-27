@@ -4,38 +4,42 @@ public class PistolWeapon : BaseWeapon
 {
     [Header("Pistol Settings")]
     public GameObject bulletPrefab;
+    public BulletPhysicsConfig bulletConfig;
+
     public override void OnLeftDown(Vector2 aimDirection)
     {
-        if (CanFire())
-        {
-            Fire(aimDirection);
-            UpdateFireTime();
-        }
+        if (!CanFire()) return;
+        Fire(aimDirection);
+        UpdateFireTime();
     }
 
     private void Fire(Vector2 direction)
     {
-        if (bulletPrefab != null && owner != null)
+        if (bulletPrefab == null || bulletConfig == null || owner == null)
         {
-            PlayerEntity playerEntity = owner as PlayerEntity;
-            if (playerEntity != null)
-            {
-                // 동적 발사 위치 계산
-                Vector3 firePosition = playerEntity.GetFirePosition(direction);
-                
-                // 탄환 생성
-                GameObject bullet = Instantiate(bulletPrefab, firePosition, Quaternion.identity);
-                
-                // 탄환 초기화 및 방향 설정
-                StraightBullet bulletComponent = bullet.GetComponent<StraightBullet>();
-                if (bulletComponent != null)
-                {
-                    bulletComponent.Initialize(owner, this);
-                    bulletComponent.SetDirection(direction); // 정확한 방향 설정
-                }
-                
-                //*Debug.Log($"Bullet fired from {firePosition} in direction {direction}");
-            }
+            Debug.LogWarning("PistolWeapon: Missing bulletPrefab or bulletConfig or owner!");
+            return;
         }
+
+        if (owner is not PlayerEntity playerEntity)
+        {
+            Debug.LogWarning("PistolWeapon: owner is not PlayerEntity!");
+            return;
+        }
+
+        Vector3 firePosition = playerEntity.GetFirePosition(direction);
+
+        GameObject bulletObj = (PoolManager.Instance != null)
+            ? PoolManager.Instance.Spawn(bulletPrefab, firePosition, Quaternion.identity)
+            : Instantiate(bulletPrefab, firePosition, Quaternion.identity);
+
+        if (!bulletObj.TryGetComponent<BulletDamageSource>(out var bulletComponent))
+        {
+            Debug.LogError("PistolWeapon: BulletDamageSource not found on prefab!");
+            return;
+        }
+
+        bulletComponent.Initialize(owner, this, bulletConfig);
+        bulletComponent.SetDirection(direction);
     }
 }

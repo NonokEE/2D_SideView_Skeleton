@@ -353,8 +353,8 @@ MonoBehaviour:
   playOnStart: 0
   loop: 0
   blinkColor: {r: 0, g: 0, b: 1, a: 0.2509804}
-  blinkDuration: 0.1
-  blinkCount: 3
+  blinkTotalDuration: 0.6
+  blinkInterval: 0.1
 --- !u!1 &7691243182212628931
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,7 +385,7 @@ Transform:
   m_GameObject: {fileID: 7691243182212628931}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.9532282, y: 0.50398713, z: -0.046904065}
+  m_LocalPosition: {x: -2.9532282, y: 0.50398713, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -483,6 +483,7 @@ MonoBehaviour:
   entityID: Player_01
   maxHealth: 100
   currentHealth: 0
+  hitInvincibilityDuration: 0.3
   moveSpeed: 5
   jumpForce: 15
   weaponPrefab: {fileID: 6287356642904179592, guid: 31f5ead0efb45b14b85647928b6998a1, type: 3}

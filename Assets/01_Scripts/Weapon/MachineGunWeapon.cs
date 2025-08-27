@@ -1,50 +1,44 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
 public class MachineGunWeapon : BaseWeapon
 {
     [Header("Machine Gun Settings")]
-    public GameObject bulletPrefab; // StraightBullet 프리팹
-    
+    public GameObject bulletPrefab;
+    public BulletPhysicsConfig bulletConfig;
+
     [Header("Fire Rate Settings")]
-    public float burstFireRate = 8f; // 초당 8발 연사
-    
+    public float burstFireRate = 8f;
+
     private Coroutine burstFireCoroutine;
-    private bool isFiring = false;
-    
+    private bool isFiring;
+
     public override void OnLeftDown(Vector2 aimDirection)
     {
-        if (CanFire())
-        {
-            // 첫 발 즉시 발사
-            Fire(aimDirection);
-            UpdateFireTime();
-            
-            // 연속 발사 시작
-            StartBurstFire(aimDirection);
-        }
+        if (!CanFire()) return;
+
+        Fire(aimDirection);
+        UpdateFireTime();
+        StartBurstFire();
     }
-    
+
     public override void OnLeftHold(Vector2 aimDirection)
     {
-        // 이미 연속 발사 중이면 방향만 업데이트
-        // (실제로는 방향이 매 프레임 업데이트되므로 별도 처리 불필요)
+        // 연사 중 방향은 프레임마다 갱신
     }
-    
+
     public override void OnLeftUp(Vector2 aimDirection)
     {
-        // 연속 발사 중지
         StopBurstFire();
     }
-    
-    private void StartBurstFire(Vector2 initialDirection)
+
+    private void StartBurstFire()
     {
         if (isFiring) return;
-        
         isFiring = true;
         burstFireCoroutine = StartCoroutine(BurstFireCoroutine());
     }
-    
+
     private void StopBurstFire()
     {
         if (burstFireCoroutine != null)
@@ -54,72 +48,52 @@ public class MachineGunWeapon : BaseWeapon
         }
         isFiring = false;
     }
-    
+
     private IEnumerator BurstFireCoroutine()
     {
-        float burstInterval = 1f / burstFireRate;
-        
-        // 첫 발은 이미 발사했으므로 간격 후부터 시작
-        yield return new WaitForSeconds(burstInterval);
-        
+        float interval = 1f / burstFireRate;
+        yield return new WaitForSeconds(interval);
+
         while (isFiring)
         {
-            // 현재 마우스 방향 계산 (PlayerController에서 처리하는 방식 활용)
-            Vector2 currentAimDirection = GetCurrentAimDirection();
-            
-            Fire(currentAimDirection);
-            
-            yield return new WaitForSeconds(burstInterval);
+            Vector2 currentAim = GetCurrentAimDirection();
+            Fire(currentAim);
+            yield return new WaitForSeconds(interval);
         }
     }
-    
+
     private Vector2 GetCurrentAimDirection()
     {
-        // 현재 마우스 위치 기반 조준 방향 계산
         if (Camera.main != null && owner != null)
         {
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mouseWorldPos.z = 0;
-            
-            Vector2 aimDirection = (mouseWorldPos - owner.transform.position).normalized;
-            return aimDirection;
+            var mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mouseWorld.z = 0f;
+            return ((Vector2)(mouseWorld - owner.transform.position)).normalized;
         }
-        
-        return Vector2.right; // 기본값
+        return Vector2.right;
     }
-    
+
     private void Fire(Vector2 direction)
     {
-        if (bulletPrefab != null && owner != null)
-        {
-            PlayerEntity playerEntity = owner as PlayerEntity;
-            if (playerEntity != null)
-            {
-                // 동적 발사 위치 계산
-                Vector3 firePosition = playerEntity.GetFirePosition(direction);
-                
-                // 탄환 생성
-                GameObject bullet = Instantiate(bulletPrefab, firePosition, Quaternion.identity);
-                
-                // 탄환 초기화 및 방향 설정
-                StraightBullet bulletComponent = bullet.GetComponent<StraightBullet>();
-                if (bulletComponent != null)
-                {
-                    bulletComponent.Initialize(owner, this);
-                    bulletComponent.SetDirection(direction);
-                }
-            }
-        }
+        if (bulletPrefab == null || bulletConfig == null || owner == null)
+            return;
+
+        if (owner is not PlayerEntity playerEntity)
+            return;
+
+        Vector3 firePosition = playerEntity.GetFirePosition(direction);
+
+        GameObject bulletObj = (PoolManager.Instance != null)
+            ? PoolManager.Instance.Spawn(bulletPrefab, firePosition, Quaternion.identity)
+            : Instantiate(bulletPrefab, firePosition, Quaternion.identity);
+
+        if (!bulletObj.TryGetComponent<BulletDamageSource>(out var bulletComponent))
+            return;
+
+        bulletComponent.Initialize(owner, this, bulletConfig);
+        bulletComponent.SetDirection(direction);
     }
-    
-    // 컴포넌트 정리
-    private void OnDisable()
-    {
-        StopBurstFire();
-    }
-    
-    private void OnDestroy()
-    {
-        StopBurstFire();
-    }
+
+    private void OnDisable() => StopBurstFire();
+    private void OnDestroy() => StopBurstFire();
 }
