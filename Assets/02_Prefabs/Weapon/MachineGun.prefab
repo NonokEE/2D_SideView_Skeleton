@@ -48,5 +48,5 @@ MonoBehaviour:
   damage: 10
   fireRate: 2
   bulletPrefab: {fileID: 2546327245160202656, guid: 3c64766d6c89b534a9cc5bebe3970f53, type: 3}
-  bulletConfig: {fileID: 11400000, guid: a882656b24758ba44903a51bb1c11e28, type: 2}
-  burstFireRate: 20
+  bulletConfig: {fileID: 11400000, guid: 2df7fe9fdbd8a3d4095bc53fe95f27b3, type: 2}
+  burstFireRate: 30

@@ -15,7 +15,7 @@ MonoBehaviour:
   bulletName: Standard Pistol Bullet
   description: Basic straight projectile
   movementType: 0
-  initialSpeed: 5
+  initialSpeed: 10
   maxSpeed: 10
   accelerationTime: 5
   speedCurve:
@@ -79,7 +79,7 @@ MonoBehaviour:
     dampingFactor: 0
     maxExecutions: 1
   lifetimeType: 0
-  maxLifetime: 1
+  maxLifetime: 5
   maxDistance: 5
   maxHits: 1
   deathEffect: 0
