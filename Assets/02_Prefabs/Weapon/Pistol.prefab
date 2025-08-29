@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4855506920080073786}
   - component: {fileID: 2999848236911869932}
   m_Layer: 0
-  m_Name: PistolWeapon
+  m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,4 +48,4 @@ MonoBehaviour:
   damage: 50
   fireRate: 5
   bulletPrefab: {fileID: 2546327245160202656, guid: 3c64766d6c89b534a9cc5bebe3970f53, type: 3}
-  bulletConfig: {fileID: 11400000, guid: 89f0d461171b8374287fd73e4ba92dbe, type: 2}
+  bulletConfig: {fileID: 11400000, guid: 2df7fe9fdbd8a3d4095bc53fe95f27b3, type: 2}

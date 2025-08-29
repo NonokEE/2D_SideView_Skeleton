@@ -367,13 +367,12 @@ MonoBehaviour:
   hitInvincibilityDuration: 0.3
   owner: {fileID: 0}
   weapon: {fileID: 0}
-  damage: 50
+  damage: 20
   targetLayers:
     serializedVersion: 2
     m_Bits: 196608
   whitelist: []
   blacklist: []
   explosionSize: {x: 5, y: 5}
-  explosionDirection: 1
   explosionDuration: 0.3
   showExplosionGizmos: 1

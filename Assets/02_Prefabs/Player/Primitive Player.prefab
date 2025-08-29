@@ -337,6 +337,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  showAnimationGizmos: 1
+  gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &5734440450122704970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,6 +393,7 @@ Transform:
   m_Children:
   - {fileID: 2815852583386895270}
   - {fileID: 4494114957916209543}
+  - {fileID: 256847824052764120}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1079695587070898863
@@ -486,7 +489,7 @@ MonoBehaviour:
   hitInvincibilityDuration: 0.3
   moveSpeed: 5
   jumpForce: 15
-  weaponPrefab: {fileID: 6287356642904179592, guid: 31f5ead0efb45b14b85647928b6998a1, type: 3}
+  weaponPrefab: {fileID: 8454779348195391729, guid: 5ec815ffbd54ca24887171ae1858142c, type: 3}
   fireDistance: 0.8
   currentWeapon: {fileID: 0}
 --- !u!114 &913196990823180131
@@ -518,3 +521,34 @@ MonoBehaviour:
   showDebugLogs: 1
   enableJumpAnimation: 1
   enableHitAnimation: 1
+--- !u!1 &8661081789179536438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 256847824052764120}
+  m_Layer: 16
+  m_Name: WeaponSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &256847824052764120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8661081789179536438}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6945913639753521775}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

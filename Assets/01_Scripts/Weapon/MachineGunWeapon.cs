@@ -22,14 +22,18 @@ public class MachineGunWeapon : BaseWeapon
         StartBurstFire();
     }
 
-    public override void OnLeftHold(Vector2 aimDirection)
-    {
-        // 연사 중 방향은 프레임마다 갱신
-    }
+    public override void OnLeftHold(Vector2 aimDirection) { }
 
     public override void OnLeftUp(Vector2 aimDirection)
     {
         StopBurstFire();
+    }
+
+    public override void OnUnequip()
+    {
+        // 전환 시 연사 즉시 중지
+        StopBurstFire();
+        base.OnUnequip();
     }
 
     private void StartBurstFire()
@@ -75,20 +79,15 @@ public class MachineGunWeapon : BaseWeapon
 
     private void Fire(Vector2 direction)
     {
-        if (bulletPrefab == null || bulletConfig == null || owner == null)
-            return;
-
-        if (owner is not PlayerEntity playerEntity)
-            return;
+        if (bulletPrefab == null || bulletConfig == null || owner == null) return;
+        if (owner is not PlayerEntity playerEntity) return;
 
         Vector3 firePosition = playerEntity.GetFirePosition(direction);
-
         GameObject bulletObj = (PoolManager.Instance != null)
             ? PoolManager.Instance.Spawn(bulletPrefab, firePosition, Quaternion.identity)
             : Instantiate(bulletPrefab, firePosition, Quaternion.identity);
 
-        if (!bulletObj.TryGetComponent<BulletDamageSource>(out var bulletComponent))
-            return;
+        if (!bulletObj.TryGetComponent<BulletDamageSource>(out var bulletComponent)) return;
 
         bulletComponent.Initialize(owner, this, bulletConfig);
         bulletComponent.SetDirection(direction);
