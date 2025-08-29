@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43b42433bf72054483108da7831bf4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: Basic Pistol
+  weaponName: Missile Launcher
   damage: 50
   fireRate: 5
   bulletPrefab: {fileID: 2546327245160202656, guid: 3c64766d6c89b534a9cc5bebe3970f53, type: 3}
