@@ -1,3 +1,4 @@
+// Assets/01_Scripts/Weapon/MachineGunWeapon.cs
 using UnityEngine;
 using System.Collections;
 
@@ -13,16 +14,23 @@ public class MachineGunWeapon : BaseWeapon
     private Coroutine burstFireCoroutine;
     private bool isFiring;
 
+    private Vector2 currentAimDir = Vector2.right;
+
     public override void OnLeftDown(Vector2 aimDirection)
     {
         if (!CanFire()) return;
 
-        Fire(aimDirection);
+        if (aimDirection.sqrMagnitude > 0.0001f) currentAimDir = aimDirection.normalized;
+
+        Fire(currentAimDir);
         UpdateFireTime();
         StartBurstFire();
     }
 
-    public override void OnLeftHold(Vector2 aimDirection) { }
+    public override void OnLeftHold(Vector2 aimDirection)
+    {
+        if (aimDirection.sqrMagnitude > 0.0001f) currentAimDir = aimDirection.normalized;
+    }
 
     public override void OnLeftUp(Vector2 aimDirection)
     {
@@ -60,21 +68,9 @@ public class MachineGunWeapon : BaseWeapon
 
         while (isFiring)
         {
-            Vector2 currentAim = GetCurrentAimDirection();
-            Fire(currentAim);
+            Fire(currentAimDir);
             yield return new WaitForSeconds(interval);
         }
-    }
-
-    private Vector2 GetCurrentAimDirection()
-    {
-        if (Camera.main != null && owner != null)
-        {
-            var mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mouseWorld.z = 0f;
-            return ((Vector2)(mouseWorld - owner.transform.position)).normalized;
-        }
-        return Vector2.right;
     }
 
     private void Fire(Vector2 direction)

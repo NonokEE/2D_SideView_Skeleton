@@ -98,15 +98,26 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 GetAimDirection()
     {
-        if (Camera.main == null)
+        var cam = Camera.main;
+        if (cam == null)
         {
             Debug.LogWarning("Main camera not found");
             return Vector2.right;
         }
 
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldPos.z = 0;
-        Vector2 aimDirection = (mouseWorldPos - controlledEntity.transform.position).normalized;
-        return aimDirection;
+        // 플레이어가 서있는 평면(카메라 전방에 수직)과 마우스 광선의 교차점 계산
+        Vector3 playerPos = controlledEntity.transform.position;
+        Plane plane = new Plane(-cam.transform.forward, playerPos);
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+        if (plane.Raycast(ray, out float enter))
+        {
+            Vector3 hit = ray.GetPoint(enter);
+            Vector2 dir = ((Vector2)(hit - playerPos));
+            if (dir.sqrMagnitude > 0.0001f) return dir.normalized;
+        }
+
+        // 교차 실패 폴백(카메라-플레인 기하가 비정상일 때)
+        return Vector2.right;
     }
 }
