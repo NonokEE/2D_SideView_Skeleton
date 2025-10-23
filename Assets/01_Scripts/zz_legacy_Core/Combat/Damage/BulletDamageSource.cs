@@ -33,7 +33,7 @@ public class BulletDamageSource : DamageSourceEntity
     #endregion
 
     #region Initialization
-    public override void Initialize()
+    protected override void Initialize()
     {
         if (bulletConfig != null) InitializeFromConfig();
     }
@@ -209,7 +209,7 @@ public class BulletDamageSource : DamageSourceEntity
     private void HandleEntityCollision(BaseEntity target)
     {
         var damageData = GenerateDamageData(target);
-        target.TakeDamage(damageData);
+        (target as LivingEntity).TakeDamage(damageData);
         hitCount++;
 
         ExecuteCollisionActions(bulletConfig.EnemyCollisionActions, CreateCollisionContext(target));

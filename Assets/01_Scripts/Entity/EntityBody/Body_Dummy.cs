@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DummyEnemy : LivingEntity
+public class Body_Dummy : LivingEntity
 {
     [Header("DummyEnemy Specific")]
     [SerializeField] private BasicEnemyAnimationHandler animationHandler;
@@ -12,13 +12,6 @@ public class DummyEnemy : LivingEntity
         // AnimationHandler 자동 할당
         if (animationHandler == null)
             animationHandler = GetComponent<BasicEnemyAnimationHandler>();
-    }
-
-    public override void Initialize()
-    {
-        // 이동 비활성화 (고정형)
-        SetCanMove(false);
-        SetCanJump(false);
     }
 
     // 피격 시 애니메이션 처리
@@ -40,17 +33,6 @@ public class DummyEnemy : LivingEntity
     {
         return 1.0f; // 테스트용 짧은 무적시간
     }
-
-    protected override void OnDie()
-    {
-        // DummyEnemy 사망 처리
-        gameObject.SetActive(false);
-    }
-
-    // 이동 관련 메서드 오버라이드 (비활성화)
-    public override void Move(float horizontal) { }
-    public override void Jump() { }
-    public override void Attack() { }
 
     // 디버그
     [ContextMenu("TakeDamage")]

@@ -1,9 +1,16 @@
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerAnimationHandler))]
+[RequireComponent(typeof(WeaponManager))]
+
 public class PlayerEntity : LivingEntity
 {
     [Header("Player Specific")]
     private PlayerAnimationHandler animationHandler;
+
+    [Header("Movement Settings")]
+    public float moveSpeed = 5f;
+    public float jumpForce = 10f;
 
     [Header("Weapon System (Legacy)")]
     [SerializeField] private GameObject weaponPrefab;       // 기존 단일 무기 방식(Manager 사용 시 미사용)
@@ -25,10 +32,8 @@ public class PlayerEntity : LivingEntity
         if (weaponManager == null) weaponManager = GetComponent<WeaponManager>();
     }
 
-    public override void Initialize()
+    protected override void Initialize()
     {
-        Debug.Log($"Player {entityID} initialized");
-
         if (string.IsNullOrEmpty(entityID)) entityID = "Player_01";
         currentHealth = maxHealth;
 
@@ -78,11 +83,30 @@ public class PlayerEntity : LivingEntity
         }
     }
 
-    public override void Jump()
+    public virtual void Move(float horizontal)
     {
-        if (!IsGrounded()) return;
+        if (entityRigidbody == null) return;
+
+        Vector2 velocity = entityRigidbody.linearVelocity;
+        velocity.x = horizontal * moveSpeed;
+        entityRigidbody.linearVelocity = velocity;
+
+        if (horizontal > 0 && !facingRight)
+            Flip();
+        else if (horizontal < 0 && facingRight)
+            Flip();
+    }
+
+    public void Jump()
+    {
+        if (!IsGrounded) return;
         if (animationHandler != null) animationHandler.PlayJumpAnimation();
-        base.Jump();
+
+        if (!IsGrounded || entityRigidbody == null) return;
+
+        Vector2 velocity = entityRigidbody.linearVelocity;
+        velocity.y = jumpForce;
+        entityRigidbody.linearVelocity = velocity;
     }
 
     protected override void OnDamageTaken(DamageData damageData)

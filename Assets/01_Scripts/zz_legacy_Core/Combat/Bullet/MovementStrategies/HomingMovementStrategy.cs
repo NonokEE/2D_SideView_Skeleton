@@ -24,8 +24,8 @@ public class HomingMovementStrategy : IMovementStrategy
 
     public void UpdateMovement(float deltaTime, float moveTimer)
     {
-        if (homingTarget == null || !homingTarget.IsAlive)
-            FindHomingTarget();
+        if (homingTarget is not LivingEntity) homingTarget = null;
+        if (homingTarget == null) FindHomingTarget();
             
         if (homingTarget != null)
         {

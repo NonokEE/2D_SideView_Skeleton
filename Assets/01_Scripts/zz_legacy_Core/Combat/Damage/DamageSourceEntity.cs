@@ -13,6 +13,11 @@ public abstract class DamageSourceEntity : BaseEntity, IDamageSource, IPoolable
     [SerializeField] protected List<BaseEntity> whitelist = new();       // 강제 타겟
     [SerializeField] protected List<BaseEntity> blacklist = new();       // 제외 타겟
 
+    protected override void Initialize()
+    {
+        // BaseEntity 초기화는 별도 처리
+    }
+
     public virtual void Initialize(BaseEntity sourceOwner, BaseWeapon sourceWeapon)
     {
         owner = sourceOwner;
@@ -40,7 +45,8 @@ public abstract class DamageSourceEntity : BaseEntity, IDamageSource, IPoolable
 
     public virtual bool CanDamage(BaseEntity target)
     {
-        if (target == null || !target.IsAlive) return false;
+        if (target == null) return false;
+        if (target is not LivingEntity) return false;
 
         // Blacklist 우선
         if (blacklist.Contains(target)) return false;
@@ -65,11 +71,6 @@ public abstract class DamageSourceEntity : BaseEntity, IDamageSource, IPoolable
     }
 
     public void SetTargetLayers(LayerMask layers) => targetLayers = layers;
-
-    public override void Initialize()
-    {
-        // BaseEntity 초기화는 별도 처리
-    }
 
     // ─── Pool 연동 공통 경로 ─────────────────────────────────────────────
 

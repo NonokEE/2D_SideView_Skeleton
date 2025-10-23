@@ -1,37 +1,30 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerEntity))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Input Settings")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode downKey = KeyCode.S;
 
-    private LivingEntity controlledEntity;
     private PlayerEntity playerEntity;
-    private bool isInitialized = false;
     private bool wheelConsumedThisFrame = false;
 
-    private void Start()
+    private IEnumerator Start()
     {
-        controlledEntity = GetComponent<LivingEntity>();
-        playerEntity = controlledEntity as PlayerEntity;
+        yield return null; 
+        playerEntity = GetComponent<PlayerEntity>();
 
-        if (controlledEntity == null)
-            Debug.LogError("PlayerController: LivingEntity component not found!");
-
-        StartCoroutine(WaitForInitialization());
+        if (playerEntity == null)
+            Debug.LogError("PlayerController: PlayerEntity component not found!");
     }
 
-    private System.Collections.IEnumerator WaitForInitialization()
-    {
-        yield return new WaitForEndOfFrame();
-        isInitialized = true;
-        Debug.Log("PlayerController initialization complete");
-    }
 
     private void Update()
     {
-        if (!isInitialized || controlledEntity == null) return;
+        if (playerEntity == null) return;
 
         wheelConsumedThisFrame = false;
 
@@ -44,16 +37,16 @@ public class PlayerController : MonoBehaviour
     private void HandleMovementInput()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
-        controlledEntity.Move(horizontal);
+        playerEntity.Move(horizontal);
     }
 
     private void HandleJumpInput()
     {
         if (Input.GetKeyDown(jumpKey) && !Input.GetKey(downKey))
-            controlledEntity.Jump();
+            playerEntity.Jump();
 
         if (Input.GetKeyDown(jumpKey) && Input.GetKey(downKey))
-            controlledEntity.DropThroughPlatform();
+            playerEntity.IgnorePlatform();
     }
 
     private void HandleWeaponInput()
@@ -62,13 +55,14 @@ public class PlayerController : MonoBehaviour
 
         Vector2 aimDirection = GetAimDirection();
 
-        if (Input.GetMouseButtonDown(0))      playerEntity.HandleWeaponInput(MouseInputType.LeftDown,  aimDirection);
-        else if (Input.GetMouseButton(0))     playerEntity.HandleWeaponInput(MouseInputType.LeftHold,  aimDirection);
-        else if (Input.GetMouseButtonUp(0))   playerEntity.HandleWeaponInput(MouseInputType.LeftUp,    aimDirection);
+             if(Mouse.current.leftButton.wasPressedThisFrame)  playerEntity.HandleWeaponInput(MouseInputType.LeftDown, aimDirection);
+        else if(Mouse.current.leftButton.isPressed)            playerEntity.HandleWeaponInput(MouseInputType.LeftHold, aimDirection);
+        else if(Mouse.current.leftButton.wasReleasedThisFrame) playerEntity.HandleWeaponInput(MouseInputType.LeftUp, aimDirection);
 
-        if (Input.GetMouseButtonDown(1))      playerEntity.HandleWeaponInput(MouseInputType.RightDown, aimDirection);
-        else if (Input.GetMouseButton(1))     playerEntity.HandleWeaponInput(MouseInputType.RightHold, aimDirection);
-        else if (Input.GetMouseButtonUp(1))   playerEntity.HandleWeaponInput(MouseInputType.RightUp,   aimDirection);
+             if(Mouse.current.rightButton.wasPressedThisFrame)  playerEntity.HandleWeaponInput(MouseInputType.RightDown, aimDirection);
+        else if(Mouse.current.rightButton.isPressed)            playerEntity.HandleWeaponInput(MouseInputType.RightHold, aimDirection);
+        else if(Mouse.current.rightButton.wasReleasedThisFrame) playerEntity.HandleWeaponInput(MouseInputType.RightUp, aimDirection);
+
     }
 
     private void HandleWeaponSwitchInput()
@@ -106,7 +100,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // 플레이어가 서있는 평면(카메라 전방에 수직)과 마우스 광선의 교차점 계산
-        Vector3 playerPos = controlledEntity.transform.position;
+        Vector3 playerPos = playerEntity.transform.position;
         Plane plane = new Plane(-cam.transform.forward, playerPos);
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 

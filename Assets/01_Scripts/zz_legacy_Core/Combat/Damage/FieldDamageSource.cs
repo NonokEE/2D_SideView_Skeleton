@@ -12,7 +12,7 @@ public class FieldDamageSource : DamageSourceEntity
     private readonly HashSet<BaseEntity> entitiesInField = new();
     private Coroutine fieldCoroutine;
 
-    public override void Initialize()
+    protected override void Initialize()
     {
         SetupFieldAppearance();
         fieldCoroutine = StartCoroutine(FieldDamageCoroutine());
@@ -59,11 +59,12 @@ public class FieldDamageSource : DamageSourceEntity
     {
         foreach (var e in entitiesInField)
         {
-            if (e == null || !e.IsAlive) continue;
+            if (e == null) continue;
+            if (e is not LivingEntity) continue;
             if (!CanDamage(e)) continue;
 
             var data = GenerateDamageData(e);
-            e.TakeDamage(data);
+            (e as LivingEntity).TakeDamage(data);
         }
     }
 

@@ -20,7 +20,7 @@ public class ExplosionDamageSource : DamageSourceEntity
     #endregion
 
     #region Initialization
-    public override void Initialize()
+    protected override void Initialize()
     {
         if (!hasExploded)
             explodeCoroutine = StartCoroutine(ExplodeCoroutine());
@@ -76,7 +76,7 @@ public class ExplosionDamageSource : DamageSourceEntity
         {
             damagedEntities.Add(target);
             var data = GenerateDamageData(target);
-            target.TakeDamage(data);
+            (target as LivingEntity).TakeDamage(data);
         }
     }
     #endregion
